@@ -31,6 +31,9 @@ fetch("http://localhost:3000/api/products/")
     for (let produit of Tableproduits) {
       console.log('name' + produit.name);
 
+      let productLink = document.createElement("a")
+      productLink.href = "./product.html?id=" + produit._id
+
       // je créé une balise article que je stock dans la
       // variable article
       let article = document.createElement("article");
@@ -39,8 +42,8 @@ fetch("http://localhost:3000/api/products/")
       let h3 = document.createElement("h3");
       // je rajoute l'élément article dans mon élément items
       // pour le faire afficher
-      eltItems.appendChild(article)
-
+      
+      productLink.appendChild(article)
       // le h3 a pour text TEST
       h3.innerHTML = produit.name
 
@@ -61,7 +64,7 @@ fetch("http://localhost:3000/api/products/")
       // intégration des éléments dans le DOM
       article.appendChild(p);
       article.appendChild(img);
-      eltItems.appendChild(article);
+      eltItems.appendChild(productLink)
     }
 
     // for (let produit of Tableproduits) {
@@ -85,3 +88,17 @@ fetch("http://localhost:3000/api/products/")
 // }
 
 
+// var str = "http://localhost:3000/api/products";
+// var url = new URL(str);
+// var name = url.searchParams.get("name");
+// console.log(name);
+
+// var str = "http://localhost:3000/api/products";
+// var url = new URL(str);
+// var search_params = new URLSearchParams(url.search); 
+// if(search_params.has('name')) {
+//   var name = search_params.get('name');
+//   console.log(name)
+// }
+
+// for (var p of mySearchParams);
