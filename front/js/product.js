@@ -43,12 +43,12 @@ fetch("http://localhost:3000/api/products/" + idProduct)
       console.log("name" + name);
     }
 
-    for (let price of product.price) {
-      let optionElem = document.createElement('prix')
-      optionElem.innerHTML = price;
-      // selectColors.appendChild(optionElem)
-      console.log("prix" + price);
-    }
+    // for (let price of product.price) {
+    //   let optionElem = document.createElement('prix')
+    //   optionElem.innerHTML = price;
+    //   // selectColors.appendChild(optionElem)
+    //   console.log("prix" + price);
+    // }
 
     for (let imageUrl of product.imageUrl) {
       let optionElem = document.createElement('image')
