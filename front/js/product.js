@@ -24,24 +24,58 @@ fetch("http://localhost:3000/api/products/" + idProduct)
     console.log('product', product)
 
     // création ou positionnement sur le noeud parent
-    let itemImgElem = document.querySelector('.item__img');
+    
     let titleElem = document.getElementById('title');
+    let priceElem = document.getElementById('price');
+    let descriptionElem = document.getElementById ('description')
     titleElem.innerHTML = product.name
 
     // faire afficher les infos du produit (comme pour la liste des produits)
-    for (let _id of product._id) {
-      let optionElem = document.createElement('id')
-      optionElem.innerText = _id;
-      // select_id.appendChild(optionElem)
-      console.log("id" + _id);
-    }
+    
+      // Selectionner le parent de l'image
+      let itemImgElem = document.querySelector('.item__img');
+      // Créer un élement image
+      let img = document.createElement("img");
+      // hydrater sa prop source
+      img.src = product.imageUrl
+      // hydrater sa prop Alt
+      img.alt = product.altTxt
+      // Injecter element img dans son parent
+      itemImgElem.appendChild(img) 
 
-    for (let name of product.name) {
-      let optionElem = document.createElement('name')
-      optionElem.innerText = name;
-      // selectColors.appendChild(optionElem)
-      console.log("name" + name);
-    }
+      // Name/title
+      let h1 = document.createElement("title");
+      titleElem.innerHTML = product.name
+
+      // prix
+      let span = document.createElement("price");
+      priceElem.innerHTML = product.price
+
+      // description
+      let id = document.createElement("description");
+      descriptionElem.innerHTML = product.description
+
+
+
+
+
+
+
+
+      
+
+      // let idElem = document.createElement('id')
+      // idElem.innerText = product._id;
+      // // select_id.appendChild(optionElem)
+      
+    
+
+    
+      // let optionElem = document.createElement('name')
+      // optionElem.innerText = name;
+      // // selectColors.appendChild(optionElem)
+      // console.log("name" + name);
+    
 
     // for (let price of product.price) {
     //   let optionElem = document.createElement('prix')
@@ -50,12 +84,12 @@ fetch("http://localhost:3000/api/products/" + idProduct)
     //   console.log("prix" + price);
     // }
 
-    for (let imageUrl of product.imageUrl) {
-      let optionElem = document.createElement('image')
-      optionElem.innerText = imageUrl;
-      // selectColors.appendChild(optionElem)
-      console.log("image" + imageUrl);
-    }
+    
+      // let optionElem = document.createElement('image')
+      // optionElem.innerText = imageUrl;
+      // // selectColors.appendChild(optionElem)
+      // console.log("image" + imageUrl);
+    
 
     // attention cas particulier pour les colors, ce sont des boucles
     let selectColors = document.getElementById ("colors");
