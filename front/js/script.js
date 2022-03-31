@@ -1,18 +1,4 @@
-// fetch("http://localhost:3000/api/products/");
 
-// const obj = {
-//     colors: [
-//       Blue,
-//       White,
-//       Black
-//     ],
-//     _id: 107fb5b75607497b96722bda5b504926,
-//     name: Kanap Sinopé,
-//     price: 1849,
-//     imageUrl: http://localhost:3000/images/kanap01.jpeg,
-//     description: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum,
-//     altTxt: "Photo d'un canapé bleu, deux places";
-//   },
 var Tableproduits = []  
 fetch("http://localhost:3000/api/products/")
   .then(function(res) {
@@ -66,39 +52,4 @@ fetch("http://localhost:3000/api/products/")
       article.appendChild(img);
       eltItems.appendChild(productLink)
     }
-
-    // for (let produit of Tableproduits) {
-    //   console.log('image' + produit.imageUrl);
-    //   // let article = document.createElement("article");
-    //   let img = document.createElement("img");
-    //   img.innerHTML = produit.imageUrl
-    //   eltItems.appendChild(article)
-    //   article.appendChild(img);
-    //   }
-
-  })
-  // .catch(function(err) {
-  //   // Une erreur est survenue
-  // });
-
-
-//   const numberOfProducts = 8;
-// for (let i = 0; i < numberOfProducts; i++) {
-//    console.log("numberItems");
-// }
-
-
-// var str = "http://localhost:3000/api/products";
-// var url = new URL(str);
-// var name = url.searchParams.get("name");
-// console.log(name);
-
-// var str = "http://localhost:3000/api/products";
-// var url = new URL(str);
-// var search_params = new URLSearchParams(url.search); 
-// if(search_params.has('name')) {
-//   var name = search_params.get('name');
-//   console.log(name)
-// }
-
-// for (var p of mySearchParams);
+  });

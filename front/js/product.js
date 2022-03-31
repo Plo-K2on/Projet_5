@@ -32,64 +32,29 @@ fetch("http://localhost:3000/api/products/" + idProduct)
 
     // faire afficher les infos du produit (comme pour la liste des produits)
     
-      // Selectionner le parent de l'image
-      let itemImgElem = document.querySelector('.item__img');
-      // Créer un élement image
-      let img = document.createElement("img");
-      // hydrater sa prop source
-      img.src = product.imageUrl
-      // hydrater sa prop Alt
-      img.alt = product.altTxt
-      // Injecter element img dans son parent
-      itemImgElem.appendChild(img) 
+    // Selectionner le parent de l'image
+    let itemImgElem = document.querySelector('.item__img');
+    // Créer un élement image
+    let img = document.createElement("img");
+    // hydrater sa prop source
+    img.src = product.imageUrl
+    // hydrater sa prop Alt
+    img.alt = product.altTxt
+    // Injecter element img dans son parent
+    itemImgElem.appendChild(img) 
 
-      // Name/title
-      let h1 = document.createElement("title");
-      titleElem.innerHTML = product.name
+    // Name/title
+    let h1 = document.createElement("title");
+    titleElem.innerHTML = product.name
 
-      // prix
-      let span = document.createElement("price");
-      priceElem.innerHTML = product.price
+    // prix
+    let span = document.createElement("price");
+    priceElem.innerHTML = product.price
 
-      // description
-      let id = document.createElement("description");
-      descriptionElem.innerHTML = product.description
+    // description
+    let id = document.createElement("description");
+    descriptionElem.innerHTML = product.description
 
-
-
-
-
-
-
-
-      
-
-      // let idElem = document.createElement('id')
-      // idElem.innerText = product._id;
-      // // select_id.appendChild(optionElem)
-      
-    
-
-    
-      // let optionElem = document.createElement('name')
-      // optionElem.innerText = name;
-      // // selectColors.appendChild(optionElem)
-      // console.log("name" + name);
-    
-
-    // for (let price of product.price) {
-    //   let optionElem = document.createElement('prix')
-    //   optionElem.innerHTML = price;
-    //   // selectColors.appendChild(optionElem)
-    //   console.log("prix" + price);
-    // }
-
-    
-      // let optionElem = document.createElement('image')
-      // optionElem.innerText = imageUrl;
-      // // selectColors.appendChild(optionElem)
-      // console.log("image" + imageUrl);
-    
 
     // attention cas particulier pour les colors, ce sont des boucles
     let selectColors = document.getElementById ("colors");
@@ -97,9 +62,70 @@ fetch("http://localhost:3000/api/products/" + idProduct)
       for (let colors of product.colors) {
         let optionElem = document.createElement('option')
         optionElem.innerText = colors;
+        optionElem.value = colors
         selectColors.appendChild(optionElem)
         console.log("couleurs" + colors);
       }
+  });
+
+      // Gestionnaire d'évenement
+      const elt = document.getElementById('addToCart');
+      elt.addEventListener('click', function () {
+        // appel de la fonction
+         addToCart ()
+        });
+
+      // Localstorage
+
+      // def de la fonction
+        function addToCart (){
+          let variant = document.getElementById ('colors').value
+          let itemCart = {}
+          itemCart.info = product
+          itemCart.selectedVariant = variant
+          console.log ('itemCart', itemCart)
+
+          let variantQauntity = document.getElementById ('quantity').value
+          let itemQuantity = {}
+          itemQuantity.info = product
+          itemQuantity.selectedVariant = variantQauntity
+          console.log ('itemQuantity', itemQuantity)
+          
+          let allItems = []
+
+          allItems.push(itemCart)
+
+          localStorage.setItem('panier', allItems);
+          
+          let objJson = {
+            itemCart : 1,
+            itemQuantity : 1,
+        }
+        let objLinea = JSON.stringify(objJson);
+        localStorage.setItem("obj",objLinea);
+
+        console.log (localStorage)
+
+          // let cartLink = document.createElement("a")
+          // cartLink.href = "./cart.html?id" + itemCart._id
+
+
+          // ajouter la quantité dans une nouvelle propriété de l'objet itemCart
+          // ajouter l'objet itemCart dans le panier
+          //// créer un tableau vide (nommé allItems)
+          //// dans ce tableau vide on va push objet itemCart
+          //// enregistrer le tableau dans localstorage
+          ////(il va falloir peut etre utiliser JSON.stringify(surtontableau))
+          // faire un console.log du localstorage
+        }
 
     
-  });
+          
+      // if(!localStorage.getItem('panier')) {
+      //   populateStorage();
+      // } else {
+      //   setStyles();
+      // }
+
+      // localStorage.setItem('panier', tontableau);
+
