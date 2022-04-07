@@ -75,51 +75,59 @@ fetch("http://localhost:3000/api/products/" + idProduct)
          addToCart ()
         });
 
-      // Localstorage
+      function addToCart (){
+        // j'initialise un tableau
+        // ok pour cette première étape mais ce n'est pas complet
+        // l'idée c'est que tu récupère le localstorage courant que tu stock ensuite dans ta variable tableau
+        //  => si le localstorage est vide donc tu initialise ta varible allitems avec un tableau vide
+        //  => si le localstorage n'est pas vide, alors allitems prends la valeurs du localstorage (qui est un tableau)
+        // Je récupère le localstorage existant
+        let allItems = JSON.parse(localStorage.getItem('panier')) || []
+        console.log('before', allItems)
+        // j'initialise mon item à ajouter dans le panier
+        let itemCart = {}
 
-      // def de la fonction
-        function addToCart (){
-          let variant = document.getElementById ('colors').value
-          let itemCart = {}
-          itemCart.info = product
-          itemCart.selectedVariant = variant
-          console.log ('itemCart', itemCart)
+        // je récupère les valeurs des selects
+        let variant = document.getElementById ('colors').value
+        let quantity = document.getElementById ('quantity').value
 
-          let variantQauntity = document.getElementById ('quantity').value
-          let itemQuantity = {}
-          itemQuantity.info = product
-          itemQuantity.selectedVariant = variantQauntity
-          console.log ('itemQuantity', itemQuantity)
-          
-          let allItems = []
+        // j'ajoute ces valeurs + les infos du produit dans mon itemCart
+        itemCart.info = product
+        itemCart.selectedVariant = variant
+        itemCart.quantity = parseInt(quantity)
+        console.log ('itemCart', itemCart)
+ 
+        // je push mon itemCart dans le tableau si il n'existe pas déja
+        // sinon on augment la quantité
+        // utiliser la methode .find comme vu pendant la session
+        // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+        const monTableau = [1, 10];
 
-          allItems.push(itemCart)
+        const found = monTableau.find(element1 => element2 > 10);
 
-          localStorage.setItem('panier', allItems);
-          
-          let objJson = {
-            itemCart : 1,
-            itemQuantity : 1,
-        }
-        let objLinea = JSON.stringify(objJson);
-        localStorage.setItem("obj",objLinea);
+        console.log(found);
 
-        console.log (localStorage)
+        // utiliser une conditionnelle
+        if(!localStorage.getItem('panier')) {
+            populateStorage();
+          } else {
+            setStyles();
+          }
 
-          // let cartLink = document.createElement("a")
-          // cartLink.href = "./cart.html?id" + itemCart._id
+        // si un element est déja présent dans le tableau alors on augmente uniquement la quantité
+        
+        itemCart.quantity += parseInt(quantity) // soit ca
+        
+        allItems.push(itemCart) // soit ca
 
+        // j'enregistre ce tableau dans le localstorage
+        localStorage.setItem('panier' , JSON.stringify(allItems));
 
-          // ajouter la quantité dans une nouvelle propriété de l'objet itemCart
-          // ajouter l'objet itemCart dans le panier
-          //// créer un tableau vide (nommé allItems)
-          //// dans ce tableau vide on va push objet itemCart
-          //// enregistrer le tableau dans localstorage
-          ////(il va falloir peut etre utiliser JSON.stringify(surtontableau))
-          // faire un console.log du localstorage
-        }
-
-    
+        console.log ('after', localStorage)
+        
+      }
+      
+      
           
       // if(!localStorage.getItem('panier')) {
       //   populateStorage();
