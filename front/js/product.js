@@ -101,19 +101,30 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         // sinon on augment la quantité
         // utiliser la methode .find comme vu pendant la session
         // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-        const monTableau = [1, 10];
+        const monTableau = [
+          {nom: 'Sinopé', quantité: 0},
+          {nom: 'Cyllène', quantité: 0},
+          {nom: 'Calycé', quantité: 0},
+          {nom: 'Autonoé', quantité: 0},
+          {nom: 'Eurydomé', quantité: 0},
+          {nom: 'Hélicé', quantité: 0},
+          {nom: 'Thyoné', quantité: 0},
+          {nom: 'Orthosie', quantité: 0}
+        ];
 
-        const found = monTableau.find(element1 => element2 > 10);
+        const resultat = monTableau.find(produit => produit.nom > 2);
 
-        console.log(found);
+        console.log(resultat);
 
         // utiliser une conditionnelle
-        if(!localStorage.getItem('panier')) {
-            populateStorage();
-          } else {
-            setStyles();
-          }
 
+        if (produit.nom > 2){
+          resultat
+        }
+          
+        // } else if (produit.nom  > 5) {
+
+        
         // si un element est déja présent dans le tableau alors on augmente uniquement la quantité
         
         itemCart.quantity += parseInt(quantity) // soit ca
@@ -124,6 +135,12 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         localStorage.setItem('panier' , JSON.stringify(allItems));
 
         console.log ('after', localStorage)
+
+
+        var el = document.querySelector('#utilisateur');
+
+        chaîne = element.dataset.allItems;
+        element.dataset.allItems = chaîne;
         
       }
       
