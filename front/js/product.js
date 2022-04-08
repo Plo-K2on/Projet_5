@@ -101,24 +101,26 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         // sinon on augment la quantité
         // utiliser la methode .find comme vu pendant la session
         // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/find
-        const monTableau = [
-          {nom: 'Sinopé', quantité: 0},
-          {nom: 'Cyllène', quantité: 0},
-          {nom: 'Calycé', quantité: 0},
-          {nom: 'Autonoé', quantité: 0},
-          {nom: 'Eurydomé', quantité: 0},
-          {nom: 'Hélicé', quantité: 0},
-          {nom: 'Thyoné', quantité: 0},
-          {nom: 'Orthosie', quantité: 0}
-        ];
 
-        const resultat = monTableau.find(produit => produit.nom > 2);
+        // const monTableau = [
+        //   {nom: 'Sinopé', quantité: 0},
+        //   {nom: 'Cyllène', quantité: 0},
+        //   {nom: 'Calycé', quantité: 0},
+        //   {nom: 'Autonoé', quantité: 0},
+        //   {nom: 'Eurydomé', quantité: 0},
+        //   {nom: 'Hélicé', quantité: 0},
+        //   {nom: 'Thyoné', quantité: 0},
+        //   {nom: 'Orthosie', quantité: 0}
+        // ];
+
+        const resultat = allItems.find(name => quantity = 1); // j'indique que la quantité des produits présent dans le tableau doit être à 1 
 
         console.log(resultat);
 
         // utiliser une conditionnelle
 
-        if (produit.nom > 2){
+        if (quantity > 1){
+        } else {              // j'indique que si la quantité est supérieur à 1, la valeur doit être mis à 1 en executant la commande "resultat"
           resultat
         }
           
@@ -127,9 +129,9 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         
         // si un element est déja présent dans le tableau alors on augmente uniquement la quantité
         
-        itemCart.quantity += parseInt(quantity) // soit ca
+        // itemCart.quantity += parseInt(quantity) // soit ca
         
-        allItems.push(itemCart) // soit ca
+        // allItems.push(itemCart) // soit ca
 
         // j'enregistre ce tableau dans le localstorage
         localStorage.setItem('panier' , JSON.stringify(allItems));
@@ -145,7 +147,6 @@ fetch("http://localhost:3000/api/products/" + idProduct)
       }
       
       
-          
       // if(!localStorage.getItem('panier')) {
       //   populateStorage();
       // } else {
