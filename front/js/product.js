@@ -9,7 +9,7 @@ let search_params = new URLSearchParams(url.search);
 // stocker cette id dans une variable
 if(search_params.has('id')) {
   idProduct = search_params.get('id')
-  console.log('idProduct', idProduct)
+  // console.log('idProduct', idProduct)
 }
 // faire un appel a l'api en concaténant l'url de l'api + la variable qui stock l'id du produit
 fetch("http://localhost:3000/api/products/" + idProduct)
@@ -64,7 +64,7 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         optionElem.innerText = colors;
         optionElem.value = colors
         selectColors.appendChild(optionElem)
-        console.log("couleurs" + colors);
+        // console.log("couleurs" + colors);
       }
   });
 
@@ -76,82 +76,32 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         });
 
       function addToCart (){
-        // j'initialise un tableau
-        // ok pour cette première étape mais ce n'est pas complet
-        // l'idée c'est que tu récupère le localstorage courant que tu stock ensuite dans ta variable tableau
-        //  => si le localstorage est vide donc tu initialise ta varible allitems avec un tableau vide
-        //  => si le localstorage n'est pas vide, alors allitems prends la valeurs du localstorage (qui est un tableau)
-        // Je récupère le localstorage existant
+      
         let allItems = JSON.parse(localStorage.getItem('panier')) || []
-        console.log('before', allItems)
-        // j'initialise mon item à ajouter dans le panier
         let itemCart = {}
-
-        // je récupère les valeurs des selects
         let variant = document.getElementById ('colors').value
         let quantity = document.getElementById ('quantity').value
-
-        // j'ajoute ces valeurs + les infos du produit dans mon itemCart
+        
         itemCart.info = product
         itemCart.selectedVariant = variant
         itemCart.quantity = parseInt(quantity)
         console.log ('itemCart', itemCart)
- 
-        // je push mon itemCart dans le tableau si il n'existe pas déja
-        // sinon on augment la quantité
-        // utiliser la methode .find comme vu pendant la session
-        // https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/find
 
-        // const monTableau = [
-        //   {nom: 'Sinopé', quantité: 0},
-        //   {nom: 'Cyllène', quantité: 0},
-        //   {nom: 'Calycé', quantité: 0},
-        //   {nom: 'Autonoé', quantité: 0},
-        //   {nom: 'Eurydomé', quantité: 0},
-        //   {nom: 'Hélicé', quantité: 0},
-        //   {nom: 'Thyoné', quantité: 0},
-        //   {nom: 'Orthosie', quantité: 0}
-        // ];
-
-        const resultat = allItems.find(name => quantity = 1); // j'indique que la quantité des produits présent dans le tableau doit être à 1 
-
-        console.log(resultat);
-
-        // utiliser une conditionnelle
-
-        if (quantity > 1){
-        } else {              // j'indique que si la quantité est supérieur à 1, la valeur doit être mis à 1 en executant la commande "resultat"
-          resultat
-        }
-          
-        // } else if (produit.nom  > 5) {
-
+      // Ajouter 2 produits du même nom dans le panier puis verifier le resultat
+      // Si le produit n'apparait qu'une seul fois mais avec une quantité de 2 : ne rien faire
+      // Si le nom du produit apparaît 2 fois, il faut assembler les 2 produits
+      // Utiliser la méthode .find pour trouver tout les éléments en doublons 
+      // Ensuite utiliser une conditionnelle pour executer l'action souhaiter en cas de doublons
+      // Répeter l'action d'ajouts au panier de plusieurs produit du même nom puis verifier le resultat
         
-        // si un element est déja présent dans le tableau alors on augmente uniquement la quantité
-        
-        // itemCart.quantity += parseInt(quantity) // soit ca
-        
-        // allItems.push(itemCart) // soit ca
-
-        // j'enregistre ce tableau dans le localstorage
-        localStorage.setItem('panier' , JSON.stringify(allItems));
-
-        console.log ('after', localStorage)
 
 
-        var el = document.querySelector('#utilisateur');
 
-        chaîne = element.dataset.allItems;
-        element.dataset.allItems = chaîne;
-        
+
+
+
+
+
+
+
       }
-      
-      
-      // if(!localStorage.getItem('panier')) {
-      //   populateStorage();
-      // } else {
-      //   setStyles();
-      // }
-
-      // localStorage.setItem('panier', tontableau);
-
