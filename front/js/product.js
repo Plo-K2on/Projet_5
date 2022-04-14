@@ -87,21 +87,35 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         itemCart.quantity = parseInt(quantity)
         console.log ('itemCart', itemCart)
 
-      // Ajouter 2 produits du même nom dans le panier puis verifier le resultat
-      // Si le produit n'apparait qu'une seul fois mais avec une quantité de 2 : ne rien faire
-      // Si le nom du produit apparaît 2 fois, il faut assembler les 2 produits
-      // Utiliser la méthode .find pour trouver tout les éléments en doublons 
-      // Ensuite utiliser une conditionnelle pour executer l'action souhaiter en cas de doublons
-      // Répeter l'action d'ajouts au panier de plusieurs produit du même nom puis verifier le resultat
-        
-
-
-
-
-
-
-
-
-
-
+     
+      // SI la quantité sélectionné est ÉGAL à 0
+      // ALORS je fait apparaitre un message d'alerte
+      if (quantity = 0) {
+        alert("panier vide")
       }
+
+      // SI la variante sélectionné est VIDE
+      // ALORS je fait apparaitre un message d'alerte
+      if (allItems = 0) {
+        alert("panier vide")
+      }
+      
+      // SI il n'y a pas d'erreur
+      // vérifier que l'ID ET la variante de l'itemCart qu'on rajoute ne se trouvent pas dans allItems
+      allItems.find(_id, itemCart)
+
+      // SI l'ID du produit et La même variante sont présent dans allItems
+      // ALORS j'augmente la quantité de ce produit dans allItems
+      // SINON j'augmente la quantité de itemCart ET j'ajoute itemCart au tableau allItems
+      
+      if (_id, itemCart == allItems) {
+      
+      }else if (product.quantity > 1){
+        
+      }else if (itemCart > 1){
+      }
+
+      // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
+      localStorage.getItem('panier')
+
+    }
