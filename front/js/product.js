@@ -121,8 +121,8 @@ fetch("http://localhost:3000/api/products/" + idProduct)
       }else if (product.quantity + 1){
         
       }else if (itemCart + 1){ // j'ai un doute de si je dois utiliser + ou += .
+        allItems.push(itemCart) 
       }
-      allItems.push(itemCart)
       
       // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
       localStorage.getItem('panier')
