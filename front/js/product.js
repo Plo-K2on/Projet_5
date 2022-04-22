@@ -99,32 +99,33 @@ fetch("http://localhost:3000/api/products/" + idProduct)
       // ALORS je fait apparaitre un message d'alerte
       if (variant == '') {
         error = 1
-        alert("panier vide")
+        alert("couleur non sélectionnée")
       }
       
       // SI il n'y a pas d'erreur
       if (error == 0){
-      }
-      
       console.log('allItems', allItems)
-      // vérifier que l'ID ET la variante de l'itemCart qu'on rajoute ne se trouvent pas dans 
+      }
+      // vérifier que l'ID ET la variante de l'itemCart qu'on rajoute ne se trouvent pas dans allItems
       // const found = array1.find(element => element > 10);
-      const found = allItems.find(ligne => product._id == ligne.info._id && product.variant == ligne.variant)
+      const found = allItems.find(ligne => product._id == ligne.info._id && itemCart.colors == itemCart.colors)
       console.log('found', found)
+      
 
       // SI l'ID du produit et La même variante sont présent dans allItems
       // ALORS j'augmente la quantité de ce produit dans allItems
       // SINON j'augmente la quantité de itemCart ET j'ajoute itemCart au tableau allItems
       
-      if (product._id && product.variant in allItems) {
-      
-      }else if (product.quantity + 1){
-        
-      }else if (itemCart + 1){ // j'ai un doute de si je dois utiliser + ou += .
+      if (product._id && product.colors == allItems) {
+        console.log()
+      }else if (product.quantity ++){
+        console.log()
+      }else (itemCart ++);{ 
+        console.log()
         allItems.push(itemCart) 
       }
       
       // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
-      localStorage.getItem('panier')
+      localStorage.getItem(allItems)
 
     }
