@@ -108,24 +108,29 @@ fetch("http://localhost:3000/api/products/" + idProduct)
       }
       // vérifier que l'ID ET la variante de l'itemCart qu'on rajoute ne se trouvent pas dans allItems
       // const found = array1.find(element => element > 10);
-      const found = allItems.find(ligne => product._id == ligne.info._id && itemCart.colors == itemCart.colors)
+      const found = allItems.find(ligne => product._id == ligne.info._id && variant == ligne.selectedVariant)
       console.log('found', found)
       
 
-      // SI l'ID du produit et La même variante sont présent dans allItems
-      // ALORS j'augmente la quantité de ce produit dans allItems
-      // SINON j'augmente la quantité de itemCart ET j'ajoute itemCart au tableau allItems
       
-      if (product._id && product.colors == allItems) {
-        console.log()
-      }else if (product.quantity ++){
-        console.log()
-      }else (itemCart ++);{ 
-        console.log()
-        allItems.push(itemCart) 
+      
+      
+      // SI l'ID du produit et La même variante sont présent dans allItems
+      if (found) {
+        // ALORS j'augmente la quantité de ce produit dans allItems
+        console.log("trouve un resultat dans le localstorage", found)
+        found.quantity += parseInt(variant) // ecriture simplifié de found.quantity = found.quantity + variant
+
+      }else{
+        // SINON j'augmente la quantité de itemCart ET j'ajoute itemCart au tableau allItems
+        console.log("il ne trouve pas de résultat dans le localstorage", found)
+        found.quantity += itemCart
+        itemCart.push(allItems)
       }
       
       // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
-      localStorage.getItem(allItems)
+      localStorage.setItem(parseInt('panier'))
+
+
 
     }
