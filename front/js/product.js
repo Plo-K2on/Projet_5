@@ -92,7 +92,7 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         // ALORS je fait apparaitre un message d'alerte
         if (quantity == 0) {
           error = 1
-          alert("panier vide")
+          alert("quantitée non sélectionnée")
         }
 
         // SI la variante sélectionné est VIDE
@@ -116,7 +116,7 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         if (found) {
           // ALORS j'augmente la quantité de ce produit dans allItems
           console.log("trouve un resultat dans le localstorage", found)
-          found.quantity += parseInt(variant) // ecriture simplifié de found.quantity = found.quantity + variant
+          found.quantity += parseInt(quantity) // ecriture simplifié de found.quantity = found.quantity + quantity
 
         }else{
           // SINON j'augmente la quantité de itemCart ET j'ajoute itemCart au tableau allItems
@@ -125,6 +125,7 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         }
         
         // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
-        localStorage.setItem(JSON.parse('panier', allItems))
+        allItems = JSON.stringify
+        localStorage.setItem('panier', allItems)
 
       }
