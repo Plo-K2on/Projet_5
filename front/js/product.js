@@ -121,11 +121,10 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         }else{
           // SINON j'augmente la quantité de itemCart ET j'ajoute itemCart au tableau allItems
           console.log("il ne trouve pas de résultat dans le localstorage", found)
-          itemCart == allItems
           allItems.push(itemCart)
         }
         
         // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
-        localStorage.setItem('panier', allItems)
+        localStorage.setItem(JSON.parse('panier', allItems))
 
       }
