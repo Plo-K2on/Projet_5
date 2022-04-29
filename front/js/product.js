@@ -125,6 +125,6 @@ fetch("http://localhost:3000/api/products/" + idProduct)
         }
         
         // J'enregistre allItems dans le localStorage a la place de l'ancienne valeur
-        localstorage.setItem('panier', JSON.stringify(allItems))
+        localStorage.setItem('panier', JSON.stringify(allItems))
 
       }
