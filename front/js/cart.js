@@ -1,10 +1,10 @@
 
-// Récuperer les elements du panier depuis le localstorage
-// Faire afficher les éléments de allItems (le panier) dans la page panier
+// OK Récuperer les elements du panier depuis le localstorage
+// OK Faire afficher les éléments de allItems (le panier) dans la page panier
 // Ajouter la possibilitée de modifier un article dans le panier
 // Ajouter la possibilitée de supprimer un article dans le panier
-// Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
-// Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
+// EN COURS Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
+// EN COURS Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
 // Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
 // Afficher un message d’erreur si besoin.
 // Créer un objet contact
@@ -35,20 +35,53 @@ function affichePanier(elementsPanier) {
     const cartContainer = document.getElementById("cart__items")
     cartContainer.innerHTML += 
     `
-    <h3>${element.info.name}</h3>
-    <p>${element.info.altTxt}</p>
-    <p>${element.info.colors}</p>
-    <p>${element.info.description}</p>
-    <p>${element.info.price}</p>
-    <p>${element.info._id}</p>
-    <div class="cart__item__img">
-      <img src="${element.info.imageUrl}" alt="Photographie d'un canapé">
+    <div class="cart__item">
+      <div class="cart__item__content__description">
+        <h3>${element.info.name}</h3>
+        <p>${element.info.price}</p>
+        <p>${element.selectedVariant}</p>
+        <p>${element.info.altTxt}</p>
+        <p>${element.info.description}</p>
+        <p>${element.info._id}</p>
+      </div>
+      <div class="cart__item__img">
+        <img src="${element.info.imageUrl}" alt="Photographie d'un canapé">
+      </div>
     </div>
     `
-
+    
   });
+
+  // j'appelle ma fonction total pour afficher les prix total du panier
+  totalPanier(elementsPanier)
 }
-  
+
+function totalPanier (panier) {
+  let totalPrix = 0;
+  let totalQuantite = 0
+  console.log('ma fonction total est appelé')
+  panier.forEach(produit => {
+    totalQuantite += produit.quantity
+    totalPrix += produit.quantity * produit.info.price 
+
+   
+  });
+  console.log ("totalQuantitée", totalQuantite)
+  console.log ("totalPrix", totalPrix)
+
+
+  let quantityElem = document.querySelector('.cart__order');
+  let priceElem = document.querySelector('.cart__price');
+  let quantity = document.createElement("totalQuantity");
+  let price = document.createElement("totalPrice");
+
+  quantityElem.innerHTML = totalQuantite;
+  priceElem.innerHTML = totalPrix;
+
+}
+
+
+
 // Ma page se charge j'appelle ma fonction principale qui est exécuté en premier
 principal();
 
