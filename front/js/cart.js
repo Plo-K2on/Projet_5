@@ -36,16 +36,26 @@ function affichePanier(elementsPanier) {
     cartContainer.innerHTML += 
     `
     <div class="cart__item">
-      <div class="cart__item__content__description">
-        <h3>${element.info.name}</h3>
-        <p>${element.info.price}</p>
-        <p>${element.selectedVariant}</p>
-        <p>${element.info.altTxt}</p>
-        <p>${element.info.description}</p>
-        <p>${element.info._id}</p>
-      </div>
       <div class="cart__item__img">
         <img src="${element.info.imageUrl}" alt="Photographie d'un canapé">
+      </div>
+      <div class="cart__item__content">
+        <div class="cart__item__content__description">
+          <h3>${element.info.name}</h3>
+          <p>${element.selectedVariant}</p>
+          <p>${element.info.price}</p>
+          <p>${element.info.altTxt}</p>
+          <p>${element.info.description}</p>
+          <p>${element.info._id}</p>
+        </div>
+        <div class="cart__item__content__settings">
+          <div class="cart__item__content__settings__quantity">
+            <p>Qté : </p><input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="">
+          </div>
+          <div class="cart__item__content__settings__delete">
+            <p class="deleteItem">Supprimer</p>
+          </div>
+        </div>
       </div>
     </div>
     `
@@ -62,18 +72,16 @@ function totalPanier (panier) {
   console.log('ma fonction total est appelé')
   panier.forEach(produit => {
     totalQuantite += produit.quantity
-    totalPrix += produit.quantity * produit.info.price 
-
-   
+    totalPrix += produit.quantity * produit.info.price  
   });
   console.log ("totalQuantitée", totalQuantite)
   console.log ("totalPrix", totalPrix)
 
 
-  let quantityElem = document.querySelector('.cart__order');
   let priceElem = document.querySelector('.cart__price');
-  let quantity = document.createElement("totalQuantity");
+  let quantityElem = document.querySelector('.cart__order');
   let price = document.createElement("totalPrice");
+  let quantity = document.createElement("totalQuantity");
 
   quantityElem.innerHTML = totalQuantite;
   priceElem.innerHTML = totalPrix;
