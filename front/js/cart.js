@@ -3,8 +3,8 @@
 // OK Faire afficher les éléments de allItems (le panier) dans la page panier
 // Ajouter la possibilitée de modifier un article dans le panier
 // Ajouter la possibilitée de supprimer un article dans le panier
-// EN COURS Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
-// EN COURS Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
+// OK Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
+// OK Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
 // Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
 // Afficher un message d’erreur si besoin.
 // Créer un objet contact
@@ -26,7 +26,7 @@ function principal() {
 // fonction pour afficher le contenu du localstorage sur la page panier
 function affichePanier(elementsPanier) {
   console.log("je dois afficher le panier, comment faire Hugo ? ")
-  elementsPanier.forEach(element => {
+  elementsPanier.forEach((element, index) => {
     console.log("element", element)
     // soit utiliser la meme methode que dans la page scripts
 
@@ -34,30 +34,29 @@ function affichePanier(elementsPanier) {
 
     const cartContainer = document.getElementById("cart__items")
     cartContainer.innerHTML += 
+
     `
-    <div class="cart__item">
+    <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
       <div class="cart__item__img">
-        <img src="${element.info.imageUrl}" alt="Photographie d'un canapé">
+        <img src=${element.info.imageUrl} alt="Photographie d'un canapé">
       </div>
       <div class="cart__item__content">
         <div class="cart__item__content__description">
-          <h3>${element.info.name}</h3>
+          <h2>${element.info.name}</h2>
           <p>${element.selectedVariant}</p>
           <p>${element.info.price}</p>
-          <p>${element.info.altTxt}</p>
-          <p>${element.info.description}</p>
-          <p>${element.info._id}</p>
         </div>
-        <div class="cart__item__content__settings">
-          <div class="cart__item__content__settings__quantity">
-            <p>Qté : </p><input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="">
+          <div class="cart__item__content__settings">
+            <div class="cart__item__content__settings__quantity">
+              <p>Qté : </p>
+              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+            </div>
+            <div class="cart__item__content__settings__delete">
+              <p class="deleteItem">Supprimer</p>
+            </div>
           </div>
-          <div class="cart__item__content__settings__delete">
-            <p class="deleteItem">Supprimer</p>
-          </div>
-        </div>
       </div>
-    </div>
+    </article>
     `
     
   });
@@ -77,21 +76,44 @@ function totalPanier (panier) {
   console.log ("totalQuantitée", totalQuantite)
   console.log ("totalPrix", totalPrix)
 
-
-  let priceElem = document.querySelector('.cart__price');
-  let quantityElem = document.querySelector('.cart__order');
-  let price = document.createElement("totalPrice");
-  let quantity = document.createElement("totalQuantity");
-
+  
+  let quantityElem = document.querySelector('#totalQuantity');
+  let priceElem = document.querySelector('#totalPrice');
   quantityElem.innerHTML = totalQuantite;
   priceElem.innerHTML = totalPrix;
-
+ 
 }
 
 
-
+function supprimer(indexTab){
+  console.log ('je dois supprimer un element du panier', indexTab)
+}
 // Ma page se charge j'appelle ma fonction principale qui est exécuté en premier
 principal();
 
 // gestionnaires des evènements
+
+  let boutonsSupprimeElem = [...document.getElementsByClassName('deleteItem')]
+// boucler sur boutonsSupprimeElem avec forEach (en utilisant element et index)
+  boutonsSupprimeElem.forEach((element, index) => {
+    console.log("element", element)
+// dans le forEach utiliser addEventListener
+// au lieu de mettre modif comme sur exemple, utiliser element (cf foreach plus hautt)
+// utiliser l'evenement clic
+// appeler la fonction supprimer dans le corps de ton gestionnaire d'evenements
+    element.addEventListener('click', function () {
+        supprimer()
+    })
+  });
+
+
+
+  // closest(deleteItem)
+  // let modif = document.querySelector('.value');
+  // let supprime = document.querySelector('deleteItem');
+  // const modif = document.getElementById("modifQuantity")
+  // modif.addEventListener('change', function () {
+  // result.textContent = this.value;
+    
+  // });
   
