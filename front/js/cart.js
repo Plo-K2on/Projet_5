@@ -102,7 +102,7 @@ principal();
 // utiliser l'evenement clic
 // appeler la fonction supprimer dans le corps de ton gestionnaire d'evenements
     element.addEventListener('click', function () {
-        supprimer()
+        supprimer(indexTab)
     })
   });
 
