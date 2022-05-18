@@ -88,6 +88,10 @@ function totalPanier (panier) {
 function supprimer(indexTab){
   console.log ('je dois supprimer un element du panier', indexTab)
 }
+
+function modifier(indexTab2){
+  console.log ('je dois modifier un element du panier', indexTab2)
+}
 // Ma page se charge j'appelle ma fonction principale qui est exécuté en premier
 principal();
 
@@ -101,11 +105,18 @@ principal();
 // au lieu de mettre modif comme sur exemple, utiliser element (cf foreach plus hautt)
 // utiliser l'evenement clic
 // appeler la fonction supprimer dans le corps de ton gestionnaire d'evenements
-    element.addEventListener('click', function () {
-        supprimer(indexTab)
-    })
+      element.addEventListener('click', function () {
+          supprimer(indexTab)
+      })
   });
 
+  let boutonsModifierElem = [...document.getElementsByClassName('itemQuantity')]
+  boutonsModifierElem.forEach((element, index) => {
+    console.log("element", element)
+      element.addEventListener('change', function () {
+        modifier(indexTab2)
+      })
+  });
 
 
   // closest(deleteItem)
