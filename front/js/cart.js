@@ -91,15 +91,14 @@ function supprimer(monIndexTableau){
   localStorage.setItem('panier', JSON.stringify(allItems))
 }
 
-function modifier(indexTab2){
-  console.log ('je dois modifier un element du panier', indexTab2)
-  let boutonsModifierElem = [...document.getElementsByClassName('itemQuantity')]
-  let itemModifier = boutonsModifierElem[indexTab2].closest('.cart__item')
-  // itemModifier.change()
+function modifier(indexTab2, newQuantity){
   // mettre a jour le tableau allITems
-  allItems.splice(indexTab2, 1)
+  
+  allItems[indexTab2].quantity = newQuantity
+  console.log('allItems', allItems)
   // mettre a jour le localstorage avec allitems
   localStorage.setItem('panier', JSON.stringify(allItems))
+  totalPanier(allItems)
 }
 // Ma page se charge j'appelle ma fonction principale qui est exécuté en premier
 principal();
@@ -122,7 +121,12 @@ principal();
   boutonsModifierElem.forEach((element, index) => {
     console.log("element", element)
       element.addEventListener('change', function () {
-        modifier(index)
+        // Recuperer la valeur de l'input
+        console.log(element.value)
+        const valueInput = element.value
+        // la passer en param en second arguments de la function modifier
+        modifier(index, valueInput)
+
       })
   });
 
