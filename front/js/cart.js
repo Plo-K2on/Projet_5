@@ -46,7 +46,7 @@ function affichePanier(elementsPanier) {
           <div class="cart__item__content__settings">
             <div class="cart__item__content__settings__quantity">
               <p>Qté : </p>
-              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="42">
+              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="1">
             </div>
             <div class="cart__item__content__settings__delete">
               <p class="deleteItem">Supprimer</p>
@@ -93,7 +93,6 @@ function supprimer(monIndexTableau){
 
 function modifier(indexTab2, newQuantity){
   // mettre a jour le tableau allITems
-  
   allItems[indexTab2].quantity = newQuantity
   console.log('allItems', allItems)
   // mettre a jour le localstorage avec allitems
@@ -126,6 +125,7 @@ principal();
         const valueInput = element.value
         // la passer en param en second arguments de la function modifier
         modifier(index, valueInput)
+        // result.textContent = this.value;
 
       })
   });
