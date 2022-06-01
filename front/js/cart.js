@@ -95,6 +95,7 @@ function modifier(indexTab2, newQuantity){
   // mettre a jour le tableau allITems
   allItems[indexTab2].quantity = newQuantity
   console.log('allItems', allItems)
+ 
   // mettre a jour le localstorage avec allitems
   localStorage.setItem('panier', JSON.stringify(allItems))
   totalPanier(allItems)
@@ -125,8 +126,7 @@ principal();
         const valueInput = element.value
         // la passer en param en second arguments de la function modifier
         modifier(index, valueInput)
-        // result.textContent = this.value;
-
+        // valueInput = this.value
       })
   });
 
