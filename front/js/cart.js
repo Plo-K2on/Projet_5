@@ -67,7 +67,8 @@ function totalPanier (panier) {
   let totalQuantite = 0
   panier.forEach(produit => {
     totalQuantite += produit.quantity
-    totalPrix += produit.quantity * produit.info.price  
+    totalPrix += produit.quantity * produit.info.price
+    
   });
 
   
@@ -95,10 +96,10 @@ function modifier(indexTab2, newQuantity){
   // mettre a jour le tableau allITems
   allItems[indexTab2].quantity = newQuantity
   console.log('allItems', allItems)
- 
   // mettre a jour le localstorage avec allitems
   localStorage.setItem('panier', JSON.stringify(allItems))
   totalPanier(allItems)
+  indexTab2 = parseInt(newQuantity)
 }
 // Ma page se charge j'appelle ma fonction principale qui est exécuté en premier
 principal();
@@ -126,17 +127,6 @@ principal();
         const valueInput = element.value
         // la passer en param en second arguments de la function modifier
         modifier(index, valueInput)
-        // valueInput = this.value
+        
       })
   });
-
-
-
-  // let modif = document.querySelector('.value');
-  // let supprime = document.querySelector('deleteItem');
-  // const modif = document.getElementById("modifQuantity")
-  // modif.addEventListener('change', function () {
-  // result.textContent = this.value;
-    
-  // });
-  
