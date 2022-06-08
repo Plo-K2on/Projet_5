@@ -1,8 +1,8 @@
 
 // OK Récuperer les elements du panier depuis le localstorage
 // OK Faire afficher les éléments de allItems (le panier) dans la page panier
-// Ajouter la possibilitée de modifier un article dans le panier
-// Ajouter la possibilitée de supprimer un article dans le panier
+// OK Ajouter la possibilitée de modifier un article dans le panier
+// OK Ajouter la possibilitée de supprimer un article dans le panier
 // OK Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
 // OK Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
 // Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
@@ -46,7 +46,7 @@ function affichePanier(elementsPanier) {
           <div class="cart__item__content__settings">
             <div class="cart__item__content__settings__quantity">
               <p>Qté : </p>
-              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="1">
+              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${element.quantity}">
             </div>
             <div class="cart__item__content__settings__delete">
               <p class="deleteItem">Supprimer</p>
@@ -66,8 +66,8 @@ function totalPanier (panier) {
   let totalPrix = 0;
   let totalQuantite = 0
   panier.forEach(produit => {
-    totalQuantite += produit.quantity
-    totalPrix += produit.quantity * produit.info.price
+    totalQuantite += parseInt(produit.quantity)
+    totalPrix += parseInt(produit.quantity * produit.info.price)
     
   });
 
@@ -87,9 +87,13 @@ function supprimer(monIndexTableau){
   let itemASupprimer = boutonsSupprimeElem[monIndexTableau].closest('.cart__item')
   itemASupprimer.remove()
   // mettre a jour le tableau allITems
+  console.log('BEFORE', allItems)
   allItems.splice(monIndexTableau, 1)
-  // mettre a jour le localstorage avec allitems
+  console.log('AFTER', allItems)
   localStorage.setItem('panier', JSON.stringify(allItems))
+  totalPanier(allItems)
+  // mettre a jour le localstorage avec allitems
+  
 }
 
 function modifier(indexTab2, newQuantity){
@@ -130,3 +134,56 @@ principal();
         
       })
   });
+
+  ///////////////////  REGEX  \\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+  var firstName = document.getElementById("firstNameErrorMsg");
+
+  firstName.addEventListener("keyup", function (event) {
+    if(firstName.validity.typeMismatch) {
+      firstName.setCustomValidity("J'attend un prénom");
+    } else {
+      firstName.setCustomValidity("");
+    }
+  });
+
+  var lastName = document.getElementById("lastNameErrorMsg");
+
+  lastName.addEventListener("keyup", function (event) {
+    if(lastName.validity.typeMismatch) {
+      lastName.setCustomValidity("J'attend un nom");
+    } else {
+      lastName.setCustomValidity("");
+    }
+  });
+
+  var address = document.getElementById("addressErrorMsg");
+
+  address.addEventListener("keyup", function (event) {
+    if(address.validity.typeMismatch) {
+      address.setCustomValidity("J'attend une adresse");
+    } else {
+      address.setCustomValidity("");
+    }
+  });
+
+  var city = document.getElementById("cityErrorMsg");
+
+  city.addEventListener("keyup", function (event) {
+    if(city.validity.typeMismatch) {
+      city.setCustomValidity("J'attend une ville");
+    } else {
+      city.setCustomValidity("");
+    }
+  });
+
+  var email = document.getElementById("emailErrorMsg");
+
+  email.addEventListener("keyup", function (event) {
+    if(email.validity.typeMismatch) {
+      email.setCustomValidity("J'attend un e-mail");
+    } else {
+      email.setCustomValidity("");
+    }
+  });
+
