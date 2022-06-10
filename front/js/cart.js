@@ -137,9 +137,10 @@ principal();
 
   ///////////////////  REGEX  \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  var firstName = document.getElementById("firstNameErrorMsg");
+  var firstName = document.getElementById("firstName");
 
   firstName.addEventListener("keyup", function (event) {
+    var regexNom = new RegExp (/^([a-zA-Z]){4,20}$/);
     if(firstName.validity.typeMismatch) {
       firstName.setCustomValidity("J'attend un prénom");
     } else {
@@ -147,9 +148,10 @@ principal();
     }
   });
 
-  var lastName = document.getElementById("lastNameErrorMsg");
+  var lastName = document.getElementById("lastName");
 
   lastName.addEventListener("keyup", function (event) {
+    var regexNom =  new RegExp (/^([a-zA-Z]){4,20}$/);
     if(lastName.validity.typeMismatch) {
       lastName.setCustomValidity("J'attend un nom");
     } else {
@@ -157,9 +159,10 @@ principal();
     }
   });
 
-  var address = document.getElementById("addressErrorMsg");
+  var address = document.getElementById("address");
 
   address.addEventListener("keyup", function (event) {
+    var regexAdress = new RegExp (/^([a-zA-Z0-9]){4,20}$/);
     if(address.validity.typeMismatch) {
       address.setCustomValidity("J'attend une adresse");
     } else {
@@ -167,9 +170,10 @@ principal();
     }
   });
 
-  var city = document.getElementById("cityErrorMsg");
+  var city = document.getElementById("city");
 
   city.addEventListener("keyup", function (event) {
+    var regexNom = new RegExp (/^([a-zA-Z]){4,20}$/);
     if(city.validity.typeMismatch) {
       city.setCustomValidity("J'attend une ville");
     } else {
@@ -177,9 +181,10 @@ principal();
     }
   });
 
-  var email = document.getElementById("emailErrorMsg");
+  var email = document.getElementById("email");
 
   email.addEventListener("keyup", function (event) {
+    var regexMail = new RegExp (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{4,20}$/);
     if(email.validity.typeMismatch) {
       email.setCustomValidity("J'attend un e-mail");
     } else {
