@@ -5,8 +5,8 @@
 // OK Ajouter la possibilitée de supprimer un article dans le panier
 // OK Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
 // OK Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
-// Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
-// Afficher un message d’erreur si besoin.
+// EN COURS Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
+// EN COURS Afficher un message d’erreur si besoin.
 // Créer un objet contact
 // Créer un tableau d'ID de produits.
 // Effectuer une requête POST (en lui passant dans un objet les infos de contact et le tableau d'ID de produit) sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.
@@ -137,58 +137,80 @@ principal();
 
   ///////////////////  REGEX  \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  var firstName = document.getElementById("firstName");
+  let firstName = document.getElementById("firstName");
+  let firstNameErrorElem = document.getElementById("firstNameErrorMsg");
+  let errorFirstName = true;
 
   firstName.addEventListener("keyup", function (event) {
-    var regexNom = new RegExp (/^([a-zA-Z]){4,20}$/);
-    if(firstName.validity.typeMismatch) {
-      firstName.setCustomValidity("J'attend un prénom");
+    var regexNom = new RegExp (/^([a-zA-Z]){2,30}$/);
+    if(regexNom.test(firstName.value)) {
+      firstNameErrorElem.innerHTML = ""
+      errorFirstName = false;
     } else {
-      firstName.setCustomValidity("");
+     firstNameErrorElem.innerHTML = "Le prénom doit comporter 2 caractères minimum et 30 maximum. Il ne doit etre constitué que de lettres"
     }
   });
+
 
   var lastName = document.getElementById("lastName");
+  let lastNameErrorElem = document.getElementById("lastNameErrorMsg");
+  let errorLastName = true;
 
   lastName.addEventListener("keyup", function (event) {
-    var regexNom =  new RegExp (/^([a-zA-Z]){4,20}$/);
-    if(lastName.validity.typeMismatch) {
-      lastName.setCustomValidity("J'attend un nom");
+    var regexNom =  new RegExp (/^([a-zA-Z]){2,30}$/);
+    if(regexNom.test(lastName.value)) {
+      lastNameErrorElem.innerHTML = ""
+      errorLastName = false;
     } else {
-      lastName.setCustomValidity("");
+      lastNameErrorElem.innerHTML = "Le nom doit comporter 2 caractères minimum et 30 maximum. Il ne doit etre constitué que de lettres"
     }
   });
+
 
   var address = document.getElementById("address");
+  let addressErrorElem = document.getElementById("addressErrorMsg");
+  let errorAddress = true;
 
   address.addEventListener("keyup", function (event) {
-    var regexAdress = new RegExp (/^([a-zA-Z0-9]){4,20}$/);
-    if(address.validity.typeMismatch) {
-      address.setCustomValidity("J'attend une adresse");
+    var regexAddress = new RegExp (/^([a-zA-Z0-9]){2,30}$/);
+    if(regexAddress.test(address.value)) {
+      addressErrorElem.innerHTML = ""
+      errorAddress = false;
     } else {
-      address.setCustomValidity("");
+      addressErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
     }
   });
+
 
   var city = document.getElementById("city");
+  let cityErrorElem = document.getElementById("cityErrorMsg");
+  let errorCity = true;
 
   city.addEventListener("keyup", function (event) {
-    var regexNom = new RegExp (/^([a-zA-Z]){4,20}$/);
-    if(city.validity.typeMismatch) {
-      city.setCustomValidity("J'attend une ville");
+    var regexNom = new RegExp (/^([a-zA-Z]){2,30}$/);
+    if(regexNom.test(city.value)) {
+      cityErrorElem.innerHTML =""
+      errorCity = false;
     } else {
-      city.setCustomValidity("");
+      cityErrorElem.innerHTML = "Le nom de la ville doit comporter 2 caractères minimum et 30 maximum. Il ne doit etre constitué que de lettres"
     }
   });
+
 
   var email = document.getElementById("email");
+  let emailErrorElem = document.getElementById("emailErrorMsg");
+  let errorEmail = true;
 
   email.addEventListener("keyup", function (event) {
-    var regexMail = new RegExp (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{4,20}$/);
-    if(email.validity.typeMismatch) {
-      email.setCustomValidity("J'attend un e-mail");
+    var regexEmail = new RegExp (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{4,30}$/);
+    if(regexEmail.test(email.value)) {
+      emailErrorElem.innerHTML = ""
+      errorEmail = false;
     } else {
-      email.setCustomValidity("");
+      emailErrorElem.innerHTML = "L'email doit comporter un minimum de 4 caractères et doit être composer de @ et .com/fr"
     }
   });
 
+ // si errorFirstName = false et errorLastName = false et errorMail = false etc...
+ // alors le reste du traitement
+ // -> 
