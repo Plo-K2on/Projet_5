@@ -5,9 +5,9 @@
 // OK Ajouter la possibilitée de supprimer un article dans le panier
 // OK Créer une fonction pour calculer et afficher le prix total du panier en fonction des éléments de celui-ci
 // OK Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
-// EN COURS Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
-// EN COURS Afficher un message d’erreur si besoin.
-// Créer un objet contact
+// OK Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
+// OK Afficher un message d’erreur si besoin.
+// EN COURS Créer un objet contact
 // Créer un tableau d'ID de produits.
 // Effectuer une requête POST (en lui passant dans un objet les infos de contact et le tableau d'ID de produit) sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.
 // Rediriger l’utilisateur sur la page Confirmation, en passant l’id de commande dans l’URL, dans le but d’afficher le numéro de commande sur la page de confirmation
@@ -135,6 +135,10 @@ principal();
       })
   });
 
+  
+
+  
+
   ///////////////////  REGEX  \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   let firstName = document.getElementById("firstName");
@@ -142,12 +146,14 @@ principal();
   let errorFirstName = true;
 
   firstName.addEventListener("keyup", function (event) {
-    var regexNom = new RegExp (/^([a-zA-Z]){2,30}$/);
+    var regexNom = new RegExp (/^[a-zà-ï- ]+$/gi);
+    // var regexNom = new RegExp (/^[a-z ,.'-]+$/i);
+    // var regexNom = new RegExp (/^([a-zA-Z])$/);
     if(regexNom.test(firstName.value)) {
       firstNameErrorElem.innerHTML = ""
       errorFirstName = false;
     } else {
-     firstNameErrorElem.innerHTML = "Le prénom doit comporter 2 caractères minimum et 30 maximum. Il ne doit etre constitué que de lettres"
+     firstNameErrorElem.innerHTML = "Le prénom ne doit être constitué que de lettres"
     }
   });
 
@@ -157,12 +163,12 @@ principal();
   let errorLastName = true;
 
   lastName.addEventListener("keyup", function (event) {
-    var regexNom =  new RegExp (/^([a-zA-Z]){2,30}$/);
+    var regexNom =  new RegExp (/^[a-zà-ï- ]+$/gi);
     if(regexNom.test(lastName.value)) {
       lastNameErrorElem.innerHTML = ""
       errorLastName = false;
     } else {
-      lastNameErrorElem.innerHTML = "Le nom doit comporter 2 caractères minimum et 30 maximum. Il ne doit etre constitué que de lettres"
+      lastNameErrorElem.innerHTML = "Le nom ne doit être constitué que de lettres"
     }
   });
 
@@ -172,7 +178,7 @@ principal();
   let errorAddress = true;
 
   address.addEventListener("keyup", function (event) {
-    var regexAddress = new RegExp (/^([a-zA-Z0-9]){2,30}$/);
+    var regexAddress = new RegExp (/^[0-9a-zà-ï- ]+$/gi);
     if(regexAddress.test(address.value)) {
       addressErrorElem.innerHTML = ""
       errorAddress = false;
@@ -187,12 +193,12 @@ principal();
   let errorCity = true;
 
   city.addEventListener("keyup", function (event) {
-    var regexNom = new RegExp (/^([a-zA-Z]){2,30}$/);
+    var regexNom = new RegExp (/^[a-zà-ï- ]+$/gi);
     if(regexNom.test(city.value)) {
       cityErrorElem.innerHTML =""
       errorCity = false;
     } else {
-      cityErrorElem.innerHTML = "Le nom de la ville doit comporter 2 caractères minimum et 30 maximum. Il ne doit etre constitué que de lettres"
+      cityErrorElem.innerHTML = "Le nom de la ville ne doit être constitué que de lettres"
     }
   });
 
@@ -202,15 +208,52 @@ principal();
   let errorEmail = true;
 
   email.addEventListener("keyup", function (event) {
-    var regexEmail = new RegExp (/^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{4,30}$/);
+    var regexEmail = new RegExp (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
     if(regexEmail.test(email.value)) {
       emailErrorElem.innerHTML = ""
       errorEmail = false;
     } else {
-      emailErrorElem.innerHTML = "L'email doit comporter un minimum de 4 caractères et doit être composer de @ et .com/fr"
+      emailErrorElem.innerHTML = "L'email doit être composer de @ et .com/fr"
     }
   });
 
- // si errorFirstName = false et errorLastName = false et errorMail = false etc...
- // alors le reste du traitement
- // -> 
+  let boutonCommanderElem = document.getElementById("order");
+   boutonCommanderElem.addEventListener("click",(event) => {
+    event.preventDefault();
+    console.log("testBouton")
+    let contact = {
+      firstName : firstName,
+      lastName : lastName,
+      address : address,
+      city : city,
+      email : email,
+    }
+
+    // push les ID du panier dans le tableau produits
+
+    // let products = [allItems.push]
+
+    // let products = allItems.push ['firstname', 'lastname', 'address', 'city', 'email'];
+
+    let products = allItems.push [{
+      firstName : firstName,
+      lastName : lastName,
+      address : address,
+      city : city,
+      email : email,
+    }];
+
+    // faire un fetch a l'api en POST
+    let clientOrder = { contact, products}
+
+    fetch("http://localhost:3000/api/products/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(clientOrder)
+    });
+
+    // passer en parametre de l'appel l'objet qui pour clés contact et products
+   
+   })
