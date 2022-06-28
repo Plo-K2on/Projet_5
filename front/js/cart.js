@@ -7,12 +7,13 @@
 // OK Créer une fonction pour calculer et afficher le nombre total d'articles du panier en fonction des éléments de celui-ci
 // OK Récupérer et analyser les données saisies par l’utilisateur dans le formulaire.
 // OK Afficher un message d’erreur si besoin.
-// EN COURS Créer un objet contact
-// Créer un tableau d'ID de produits.
-// Effectuer une requête POST (en lui passant dans un objet les infos de contact et le tableau d'ID de produit) sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.
-// Rediriger l’utilisateur sur la page Confirmation, en passant l’id de commande dans l’URL, dans le but d’afficher le numéro de commande sur la page de confirmation
+// OK Créer un objet contact
+// OK Créer un tableau d'ID de produits.
+// OK COURS Effectuer une requête POST (en lui passant dans un objet les infos de contact et le tableau d'ID de produit) sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.
+// EN COURS Rediriger l’utilisateur sur la page Confirmation, en passant l’id de commande dans l’URL, dans le but d’afficher le numéro de commande sur la page de confirmation
 
 var allItems = [];
+var products = []
 
 function principal() {
   // console.log("ma fonction principale démarre ici")
@@ -220,40 +221,55 @@ principal();
   let boutonCommanderElem = document.getElementById("order");
    boutonCommanderElem.addEventListener("click",(event) => {
     event.preventDefault();
-    console.log("testBouton")
+
+    // if(regexNom.test(firstName.value) & regexNom.test(lastName.value) & regexAddress.test(address.value) & regexNom.test(city.value) & regexEmail.test(email.value)){
+     
+    // si je n'ai pas d'erreur sur le formulaire
+    // alors je peux executer le reste
+    // if( regexEmail.test(email.value) ET condition 2 ET condition 3){
+    //   alors je fais le reste du traitement 
+    // }
+
     let contact = {
-      firstName : firstName,
-      lastName : lastName,
-      address : address,
-      city : city,
-      email : email,
+      firstName : firstName.value,
+      lastName : lastName.value,
+      address : address.value,
+      city : city.value,
+      email : email.value,
     }
 
-    // push les ID du panier dans le tableau produits
 
-    // let products = [allItems.push]
-
-    // let products = allItems.push ['firstname', 'lastname', 'address', 'city', 'email'];
-
-    let products = allItems.push [{
-      firstName : firstName,
-      lastName : lastName,
-      address : address,
-      city : city,
-      email : email,
-    }];
-
+    let products = []
+    allItems.forEach(el => {
+      console.log("el", el)
+      products.push(el.info._id)
+    })
+    console.log("products", products)
+    
     // faire un fetch a l'api en POST
     let clientOrder = { contact, products}
 
-    fetch("http://localhost:3000/api/products/", {
+    fetch("http://localhost:3000/api/products/order", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify(clientOrder)
-    });
-
-    // passer en parametre de l'appel l'objet qui pour clés contact et products
-   
+    })
+    .then(function(dataFromAPIorderId) {
+      let order = dataFromAPIorderId;
+      console.log ('order', order)
+      function RedirectionJavascript(){
+        document.location.href="http://confirmation.html?orderId=order"; 
+      }
+    })
+    
+    // dans le .then de la requete fetch
+    // récupérer l'orderId provenant de la réponse du back
+    // et eventuellement le stocker dans une variable
+    // faire une redirection vers la page confirmation.html en concaténant avec 
+    // la variable contenant l'orderId
+    // ex : "leNomDeLapage.html?param1="+maVariable
+    // 
+  
    })
