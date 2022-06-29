@@ -259,9 +259,7 @@ principal();
     .then(function(dataFromAPIorderId) {
       let order = dataFromAPIorderId;
       console.log ('order', order)
-      function RedirectionJavascript(){
-        document.location.href="http://confirmation.html?orderId=order"; 
-      }
+        document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
     })
     
     // dans le .then de la requete fetch
@@ -270,6 +268,6 @@ principal();
     // faire une redirection vers la page confirmation.html en concaténant avec 
     // la variable contenant l'orderId
     // ex : "leNomDeLapage.html?param1="+maVariable
-    // 
-  
+
+    // }
    })
