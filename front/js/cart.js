@@ -217,9 +217,9 @@ principal();
 ////////////////////// REGEX CONTROL \\\\\\\\\\\\\\\\\\\\
 
   
-  let boutonCommanderElem = document.getElementById("order");
-   boutonCommanderElem.addEventListener("click",(event) => {
-    event.preventDefault();
+  // let boutonCommanderElem = document.getElementById("order");
+  //  boutonCommanderElem.addEventListener("click",(event) => {
+  //   event.preventDefault();
 
     function firstNameControl(){
 
@@ -340,5 +340,3 @@ principal();
     })
 
     // orderId = 60324100-fb7e-11ec-87e2-31a1f0f8bf69
-    
-   })
