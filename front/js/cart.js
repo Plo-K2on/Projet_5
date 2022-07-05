@@ -9,8 +9,8 @@
 // OK Afficher un message d’erreur si besoin.
 // OK Créer un objet contact
 // OK Créer un tableau d'ID de produits.
-// OK COURS Effectuer une requête POST (en lui passant dans un objet les infos de contact et le tableau d'ID de produit) sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.
-// EN COURS Rediriger l’utilisateur sur la page Confirmation, en passant l’id de commande dans l’URL, dans le but d’afficher le numéro de commande sur la page de confirmation
+// OK Effectuer une requête POST (en lui passant dans un objet les infos de contact et le tableau d'ID de produit) sur l’API et récupérer l’identifiant de commande dans la réponse de celle-ci.
+// OK Rediriger l’utilisateur sur la page Confirmation, en passant l’id de commande dans l’URL, dans le but d’afficher le numéro de commande sur la page de confirmation
 
 var allItems = [];
 var products = []
@@ -136,9 +136,6 @@ principal();
       })
   });
 
-  
-
-  
 
   ///////////////////  REGEX  \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -148,8 +145,6 @@ principal();
 
   firstName.addEventListener("keyup", function (event) {
     var regexNom = new RegExp (/^[a-zà-ï- ]+$/gi);
-    // var regexNom = new RegExp (/^[a-z ,.'-]+$/i);
-    // var regexNom = new RegExp (/^([a-zA-Z])$/);
     if(regexNom.test(firstName.value)) {
       firstNameErrorElem.innerHTML = ""
       errorFirstName = false;
@@ -218,11 +213,87 @@ principal();
     }
   });
 
+
+////////////////////// REGEX CONTROL \\\\\\\\\\\\\\\\\\\\
+
+  
   let boutonCommanderElem = document.getElementById("order");
    boutonCommanderElem.addEventListener("click",(event) => {
     event.preventDefault();
 
-    // if(regexNom.test(firstName.value) & regexNom.test(lastName.value) & regexAddress.test(address.value) & regexNom.test(city.value) & regexEmail.test(email.value)){
+    function firstNameControl(){
+
+        const firstNameControl2 = firstName.value;
+        if(regexNom.test(firstNameControl2)) {
+          return true;
+        } else {
+        alert = "Le prénom ne doit être constitué que de lettres"
+        return false;
+        }
+    }
+
+    function lastNameControl(){
+
+        // var lastName = document.getElementById("lastName");
+        // let lastNameErrorElem = document.getElementById("lastNameErrorMsg");
+        // let errorLastName = true;
+
+          const lastNameControl2 =  lastName.value;
+          if(regexNom.test(lastNameControl2)) {
+            return true
+          } else {
+           alert = "Le nom ne doit être constitué que de lettres"
+           return false;
+          }
+    }
+
+    function adressControl(){
+
+      // var address = document.getElementById("address");
+      // let addressErrorElem = document.getElementById("addressErrorMsg");
+      // let errorAddress = true;
+
+      
+        const adressControl2 = address.value;
+        if(regexAddress.test(adressControl2)) {
+          return true;
+        } else {
+          alert = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
+          return false;
+        }
+    }
+
+    function cityControl(){
+        const cityControl2 = city.value
+        if(regexNom.test(cityControl2)) {
+          return true;
+        } else {
+          alert = "Le nom de la ville ne doit être constitué que de lettres"
+          return false;
+        }
+    }
+
+    function emailControl(){
+
+      // var email = document.getElementById("email");
+      // let emailErrorElem = document.getElementById("emailErrorMsg");
+      // let errorEmail = true;
+
+        var emailControl2 = email.value 
+        if(regexEmail.test(emailControl2)) {
+          return true;
+        } else {
+          alert = "L'email doit être composer de @ et .com/fr"
+          return false;
+        }
+    }
+
+
+    if(firstNameControl(firstName.value) && lastNameControl(lastName.value) && adressControl(address.value) && cityControl(city.value) && emailControl(email.value)){
+      isValid = true
+    }else{
+      alert = ("veuillez remplir le formulaire")
+    };
      
     // si je n'ai pas d'erreur sur le formulaire
     // alors je peux executer le reste
@@ -251,23 +322,23 @@ principal();
 
     fetch("http://localhost:3000/api/products/order", {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8'
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(clientOrder)
     })
-    .then(function(dataFromAPIorderId) {
-      let order = dataFromAPIorderId;
-      console.log ('order', order)
+    .then(function(res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function(dataFromAPI) {
+      console.log("dataFromAPI", dataFromAPI)
+      let order = dataFromAPI.orderId
         document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
     })
-    
-    // dans le .then de la requete fetch
-    // récupérer l'orderId provenant de la réponse du back
-    // et eventuellement le stocker dans une variable
-    // faire une redirection vers la page confirmation.html en concaténant avec 
-    // la variable contenant l'orderId
-    // ex : "leNomDeLapage.html?param1="+maVariable
 
-    // }
+    // orderId = 60324100-fb7e-11ec-87e2-31a1f0f8bf69
+    
    })
