@@ -4,34 +4,45 @@
 function principal(){
     console.log("principal")
 
+    recuperer();
+
+    // ajouter()
 }
 
-principal();
-
+// let orderNumber = null;
 
 function recuperer(){
 
     var str = "http://127.0.0.1:5500/front/html/confirmation.html?orderid=71860100-fc30-11ec-a4fc-e74f7e75caaa";
-        var url = new URL(str);
-        var orderNumber = url.searchParams.get("71860100-fc30-11ec-a4fc-e74f7e75caaa");
-        console.log(orderNumber);
 
-    console.log("recuperer")
-}
+        let url = new URL(window.location.href);
+        let search_params = new URLSearchParams(url.search); 
 
-recuperer();
+        if(search_params.has('orderid')) {
+           var orderNumber = search_params.get('orderid')
 
-function ajouter(){
-    const ajoutOrder = document.querySelector("#orderId");
-    const numeroConfirm = 
-    `
-    60324100-fb7e-11ec-87e2-31a1f0f8bf69
-    `
+    console.log(orderNumber)
+    }
 
-    ajoutOrder.insertAdjacentText("afterbegin", numeroConfirm);
+    let ajoutOrder = document.querySelector("#orderId");
+    // let numeroConfirm = orderNumber
 
-    console.log("ajouter")
+    ajoutOrder.innerHTML = orderNumber;
+
+    // console.log(numeroConfirm)
 
 }
 
-ajouter();
+function ajouter(orderNumber){
+
+    // let ajoutOrder = document.querySelector("#orderId");
+    // let numeroConfirm = orderNumber
+
+    // ajoutOrder.innerHTML = orderNumber;
+
+    // console.log(numeroConfirm)
+
+}
+principal();
+
+

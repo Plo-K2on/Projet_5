@@ -13,7 +13,7 @@
 // OK Rediriger l’utilisateur sur la page Confirmation, en passant l’id de commande dans l’URL, dans le but d’afficher le numéro de commande sur la page de confirmation
 
 var allItems = [];
-var products = []
+// var products = []
 
 function principal() {
   // console.log("ma fonction principale démarre ici")
@@ -217,9 +217,9 @@ principal();
 ////////////////////// REGEX CONTROL \\\\\\\\\\\\\\\\\\\\
 
   
-  // let boutonCommanderElem = document.getElementById("order");
-  //  boutonCommanderElem.addEventListener("click",(event) => {
-  //   event.preventDefault();
+  let boutonCommanderElem = document.getElementById("order");
+   boutonCommanderElem.addEventListener("click",(event) => {
+    event.preventDefault();
 
     function firstNameControl(){
 
@@ -233,10 +233,6 @@ principal();
     }
 
     function lastNameControl(){
-
-        // var lastName = document.getElementById("lastName");
-        // let lastNameErrorElem = document.getElementById("lastNameErrorMsg");
-        // let errorLastName = true;
 
           const lastNameControl2 =  lastName.value;
           if(regexNom.test(lastNameControl2)) {
@@ -275,10 +271,6 @@ principal();
 
     function emailControl(){
 
-      // var email = document.getElementById("email");
-      // let emailErrorElem = document.getElementById("emailErrorMsg");
-      // let errorEmail = true;
-
         var emailControl2 = email.value 
         if(regexEmail.test(emailControl2)) {
           return true;
@@ -289,11 +281,11 @@ principal();
     }
 
 
-    if(firstNameControl(firstName.value) && lastNameControl(lastName.value) && adressControl(address.value) && cityControl(city.value) && emailControl(email.value)){
-      isValid = true
-    }else{
-      alert = ("veuillez remplir le formulaire")
-    };
+    // if(firstNameControl(firstName.value) && lastNameControl(lastName.value) && adressControl(address.value) && cityControl(city.value) && emailControl(email.value)){
+    //   isValid = true
+    // }else{
+    //   alert = ("veuillez remplir le formulaire")
+    // };
      
     // si je n'ai pas d'erreur sur le formulaire
     // alors je peux executer le reste
@@ -338,5 +330,6 @@ principal();
       let order = dataFromAPI.orderId
         document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
     })
-
+    
     // orderId = 60324100-fb7e-11ec-87e2-31a1f0f8bf69
+  })
