@@ -25,15 +25,12 @@ function recuperer(){
     }
 
     let ajoutOrder = document.querySelector("#orderId");
-    // let numeroConfirm = orderNumber
 
     ajoutOrder.innerHTML = orderNumber;
 
-    // console.log(numeroConfirm)
-
 }
 
-function ajouter(orderNumber){
+// function ajouter(orderNumber){
 
     // let ajoutOrder = document.querySelector("#orderId");
     // let numeroConfirm = orderNumber
@@ -42,7 +39,7 @@ function ajouter(orderNumber){
 
     // console.log(numeroConfirm)
 
-}
+// }
 principal();
 
 
