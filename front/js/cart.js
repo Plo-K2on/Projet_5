@@ -223,69 +223,96 @@ principal();
 
     function firstNameControl(){
 
-        const firstNameControl2 = firstName.value;
-        if(regexNom.test(firstNameControl2)) {
-          return true;
-        } else {
-        alert = "Le prénom ne doit être constitué que de lettres"
-        return false;
-        }
+      let firstNameControl2 = firstName.value;
+      var regexNom = RegExp (/^[a-zà-ï- ]+$/gi);
+      if(regexNom.test(firstNameControl2)) {
+        firstNameErrorElem.innerHTML = ""
+        errorFirstName = false;
+      } else {
+      firstNameErrorElem.innerHTML = "Le prénom ne doit être constitué que de lettres"
+      }
     }
 
     function lastNameControl(){
 
-          const lastNameControl2 =  lastName.value;
-          if(regexNom.test(lastNameControl2)) {
-            return true
-          } else {
-           alert = "Le nom ne doit être constitué que de lettres"
-           return false;
-          }
+      let lastNameControl2 =  lastName.value;
+      var regexNom = RegExp (/^[a-zà-ï- ]+$/gi);
+      if(regexNom.test(lastNameControl2)) {
+        lastNameErrorElem.innerHTML = ""
+        errorLastName = false;
+      } else {
+        lastNameErrorElem.innerHTML = "Le nom ne doit être constitué que de lettres"
+      }
     }
 
     function adressControl(){
-
-      // var address = document.getElementById("address");
-      // let addressErrorElem = document.getElementById("addressErrorMsg");
-      // let errorAddress = true;
-
       
-        const adressControl2 = address.value;
-        if(regexAddress.test(adressControl2)) {
-          return true;
-        } else {
-          alert = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
-          return false;
-        }
+      let adressControl2 = address.value;
+      var regexAddress = RegExp (/^[0-9a-zà-ï- ]+$/gi);
+      if(regexAddress.test(adressControl2)) {
+        addressErrorElem.innerHTML = ""
+        errorAddress = false;
+      } else {
+        addressErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
+      }
     }
 
     function cityControl(){
-        const cityControl2 = city.value
-        if(regexNom.test(cityControl2)) {
-          return true;
-        } else {
-          alert = "Le nom de la ville ne doit être constitué que de lettres"
-          return false;
-        }
+
+      let cityControl2 = city.value
+      var regexNom = RegExp (/^[a-zà-ï- ]+$/gi);
+      if(regexNom.test(cityControl2)) {
+        cityErrorElem.innerHTML =""
+        errorCity = false;
+      } else {
+        cityErrorElem.innerHTML = "Le nom de la ville ne doit être constitué que de lettres"
+      }
     }
 
     function emailControl(){
 
-        var emailControl2 = email.value 
-        if(regexEmail.test(emailControl2)) {
-          return true;
-        } else {
-          alert = "L'email doit être composer de @ et .com/fr"
-          return false;
-        }
+      let emailControl2 = email.value
+      var regexEmail = RegExp (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+      if(regexEmail.test(emailControl2)) {
+        emailErrorElem.innerHTML = ""
+        errorEmail = false;
+      } else {
+        emailErrorElem.innerHTML = "L'email doit être composer de @ et .com/fr"
+      }
     }
 
 
-    // if(firstNameControl(firstName.value) && lastNameControl(lastName.value) && adressControl(address.value) && cityControl(city.value) && emailControl(email.value)){
-    //   isValid = true
-    // }else{
-    //   alert = ("veuillez remplir le formulaire")
-    // };
+    if(firstNameControl(firstName.value) && lastNameControl(lastName.value) && adressControl(address.value) && cityControl(city.value) && emailControl(email.value)){
+
+      firstNameErrorElem.innerHTML = ""
+      errorFirstName = false;
+
+      lastNameErrorElem.innerHTML = ""
+      errorLastName = false;
+
+      addressErrorElem.innerHTML = ""
+      errorAddress = false;
+
+      cityErrorElem.innerHTML =""
+      errorCity = false;
+
+      emailErrorElem.innerHTML = ""
+      errorEmail = false;
+
+    }else{
+
+      firstNameErrorElem.innerHTML = "Le prénom ne doit être constitué que de lettres"
+
+      lastNameErrorElem.innerHTML = "Le nom ne doit être constitué que de lettres"
+
+      addressErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
+
+      cityErrorElem.innerHTML = "Le nom de la ville ne doit être constitué que de lettres"
+
+      emailErrorElem.innerHTML = "L'email doit être composer de @ et .com/fr"
+
+    };
+
      
     // si je n'ai pas d'erreur sur le formulaire
     // alors je peux executer le reste
@@ -330,6 +357,7 @@ principal();
       let order = dataFromAPI.orderId
         document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
     })
-    
-    // orderId = 60324100-fb7e-11ec-87e2-31a1f0f8bf69
   })
+
+    // orderId = 60324100-fb7e-11ec-87e2-31a1f0f8bf69
+  
