@@ -25,6 +25,7 @@ fetch("http://localhost:3000/api/products/")
       // je créé un élément h3 que je stock dans
       // la variable h3
       let h3 = document.createElement("h3");
+      
 
       // je rajoute l'élément article dans mon élément items
       // pour le faire afficher
@@ -37,7 +38,7 @@ fetch("http://localhost:3000/api/products/")
       article.appendChild(h3);
      
       // création des éléments
-      let p = document.createElement("texte");
+      let p = document.createElement("p");
       let img = document.createElement("img");
 
       // manipulation (affectation de valeurs)
