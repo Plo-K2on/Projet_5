@@ -1,5 +1,6 @@
 
 var allItems = [];
+// var product = dataFromAPI.orderPrice;
 
 function principal() {
   // Récuperer les elements du panier depuis le localstorage
@@ -13,31 +14,45 @@ function principal() {
 function affichePanier(elementsPanier) {
   elementsPanier.forEach((element, index) => {
 
+
+    fetch("http://localhost:3000/api/products/")
+    .then(function(res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then(function(dataFromAPI) {
+      // stocker les infos du produit dans la variable product
+      product = dataFromAPI;
+      console.log(product)
+
+
     const cartContainer = document.getElementById("cart__items")
     cartContainer.innerHTML += 
-    `
-    <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
-      <div class="cart__item__img">
-        <img src=${element.info.imageUrl} alt="Photographie d'un canapé">
-      </div>
-      <div class="cart__item__content">
-        <div class="cart__item__content__description">
-          <h2>${element.info.name}</h2>
-          <p>${element.selectedVariant}</p>
-          <p>${element.info.price}</p>
+      `
+      <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+        <div class="cart__item__img">
+          <img src=${element.info.imageUrl} alt="Photographie d'un canapé">
         </div>
-          <div class="cart__item__content__settings">
-            <div class="cart__item__content__settings__quantity">
-              <p>Qté : </p>
-              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${element.quantity}">
-            </div>
-            <div class="cart__item__content__settings__delete">
-              <p class="deleteItem">Supprimer</p>
-            </div>
+        <div class="cart__item__content">
+          <div class="cart__item__content__description">
+            <h2>${element.info.name}</h2>
+            <p>${element.selectedVariant}</p>
+            <p>${element.info.price}</p>
           </div>
-      </div>
-    </article>
-    `
+            <div class="cart__item__content__settings">
+              <div class="cart__item__content__settings__quantity">
+                <p>Qté : </p>
+                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${element.quantity}">
+              </div>
+              <div class="cart__item__content__settings__delete">
+                <p class="deleteItem">Supprimer</p>
+              </div>
+            </div>
+        </div>
+      </article>
+      `
+    })
   });
 
   // j'appelle ma fonction total pour afficher les prix total du panier
@@ -190,6 +205,46 @@ principal();
     return errorEmail
   }
 
+  function sendOrder() {
+
+    let contact = {
+      firstName : firstName.value,
+      lastName : lastName.value,
+      address : address.value,
+      city : city.value,
+      email : email.value,
+    }
+
+    let products = []
+    allItems.forEach(el => {
+      products.push(el.info._id)
+    })
+          
+    // faire un fetch a l'api en POST
+    let clientOrder = { contact, products}
+
+    fetch("http://localhost:3000/api/products/order", {
+      method: 'POST',
+      headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(clientOrder)
+    })
+
+    .then(function(res) {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+
+    .then(function(dataFromAPI) {
+      let order = dataFromAPI.orderId;
+      localStorage.clear();
+      document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
+    })
+  }
+
   firstName.addEventListener("keyup", function (event) {
     firstNameControl()
   });
@@ -223,69 +278,7 @@ principal();
     cityControl();
     emailControl();
 
-    if(errorFirstName && errorLastName && errorAddress && errorCity && errorEmail){
-      firstNameErrorElem.innerHTML = "Le prénom ne doit être constitué que de lettres"
-
-      lastNameErrorElem.innerHTML = "Le nom ne doit être constitué que de lettres"
-
-      addressErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
-
-      cityErrorElem.innerHTML = "Le nom de la ville ne doit être constitué que de lettres"
-
-      emailErrorElem.innerHTML = "L'email doit être composer de @ et .com/fr"
-
-    } else {
-
-      firstNameErrorElem.innerHTML = ""
-      errorFirstName = false;
-
-      lastNameErrorElem.innerHTML = ""
-      errorLastName = false;
-
-      addressErrorElem.innerHTML = ""
-      errorAddress = false;
-
-      cityErrorElem.innerHTML =""
-      errorCity = false;
-
-      emailErrorElem.innerHTML = ""
-      errorEmail = false;
-
-      let contact = {
-        firstName : firstName.value,
-        lastName : lastName.value,
-        address : address.value,
-        city : city.value,
-        email : email.value,
-      }
-  
-      let products = []
-      allItems.forEach(el => {
-        products.push(el.info._id)
-      })
-            
-      // faire un fetch a l'api en POST
-      let clientOrder = { contact, products}
-  
-      fetch("http://localhost:3000/api/products/order", {
-        method: 'POST',
-        headers: { 
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(clientOrder)
-      })
-
-      .then(function(res) {
-        if (res.ok) {
-          return res.json();
-        }
-      })
-
-      .then(function(dataFromAPI) {
-        let order = dataFromAPI.orderId;
-        localStorage.clear();
-        document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
-      })
+    if(!errorFirstName && !errorLastName && !errorAddress && !errorCity && !errorEmail && allItems.length > 0){
+      sendOrder()
     };
   })

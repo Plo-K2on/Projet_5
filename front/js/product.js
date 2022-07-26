@@ -1,6 +1,5 @@
 // initialisation de variables global 
 let idProduct = null;
-let product = null;
 
 // récupérer l'id du produit grace à URLSearchParams
 let url = new URL(window.location.href);
@@ -25,7 +24,8 @@ fetch("http://localhost:3000/api/products/" + idProduct)
     
     let titleElem = document.getElementById('title');
     let priceElem = document.getElementById('price');
-    let descriptionElem = document.getElementById ('description')
+    let descriptionElem = document.getElementById ('description');
+    // let altElem = document.getElementById ('')
     titleElem.innerHTML = product.name
 
     // faire afficher les infos du produit (comme pour la liste des produits)
