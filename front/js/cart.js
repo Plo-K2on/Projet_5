@@ -1,31 +1,35 @@
-
 var allItems = [];
-// var product = dataFromAPI.orderPrice;
+var boutonsModifierElem = []
+var boutonsSupprimeElem = []
 
 function principal() {
   // Récuperer les elements du panier depuis le localstorage
   allItems = JSON.parse(localStorage.getItem('panier')) || []
 
-  // Faire afficher les éléments de allItems (le panier) dans la page panier
-  affichePanier(allItems)
+  verifPrixPanier()
 }
-  
+
+// fonction pour récupérer les produits en fonction des id du panier
+function verifPrixPanier() {
+  fetch("http://localhost:3000/api/products/")
+    .then(response => response.json())
+    .then(products => {
+        for (let product of products) {
+          for (let i = 0; i < allItems.length; i++) {
+              if (allItems[i].info._id === product._id) {
+                allItems[i].info.price = product.price
+              }
+          }
+      }
+      affichePanier(allItems)
+    })
+    // .catch(error => console.log(error));
+}
+
+
 // fonction pour afficher le contenu du localstorage sur la page panier
 function affichePanier(elementsPanier) {
   elementsPanier.forEach((element, index) => {
-
-
-    fetch("http://localhost:3000/api/products/")
-    .then(function(res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(function(dataFromAPI) {
-      // stocker les infos du produit dans la variable product
-      product = dataFromAPI;
-      console.log(product)
-
 
     const cartContainer = document.getElementById("cart__items")
     cartContainer.innerHTML += 
@@ -52,9 +56,11 @@ function affichePanier(elementsPanier) {
         </div>
       </article>
       `
-    })
-  });
+    });
 
+  
+    majGestionnaireEvenements()
+  
   // j'appelle ma fonction total pour afficher les prix total du panier
   totalPanier(elementsPanier)
 }
@@ -77,7 +83,7 @@ function totalPanier (panier) {
 
 function supprimer(monIndexTableau){
   // supprimer visuellement sur ta page 
-  let boutonsSupprimeElem = [...document.getElementsByClassName('deleteItem')]
+  // let boutonsSupprimeElem = [document.getElementsByClassName('deleteItem')]
   let itemASupprimer = boutonsSupprimeElem[monIndexTableau].closest('.cart__item')
   itemASupprimer.remove()
   // mettre a jour le tableau allITems
@@ -85,9 +91,11 @@ function supprimer(monIndexTableau){
   localStorage.setItem('panier', JSON.stringify(allItems))
   totalPanier(allItems)
   // mettre a jour le localstorage avec allitems
+
+  majGestionnaireEvenements()
 }
 
-function modifier(indexTab2, newQuantity){
+function modifier(indexTab2, newQuantity) {
   // mettre a jour le tableau allITems
   allItems[indexTab2].quantity = newQuantity
   // mettre a jour le localstorage avec allitems
@@ -100,185 +108,190 @@ principal();
 
 // gestionnaires des evènements
 
-  let boutonsSupprimeElem = [...document.getElementsByClassName('deleteItem')]
-  boutonsSupprimeElem.forEach((element, index) => {
-      element.addEventListener('click', function () {
-          supprimer(index)
-      })
-  });
+function majGestionnaireEvenements() {
+  boutonsModifierElem = document.getElementsByClassName('itemQuantity')
+  boutonsSupprimeElem = document.getElementsByClassName('deleteItem')
+  
+  for (let i = 0; i < boutonsSupprimeElem.length; i++) {
+    boutonsSupprimeElem[i].addEventListener('click', function () {
+        supprimer(i)
+    })
+  }
 
-  let boutonsModifierElem = [...document.getElementsByClassName('itemQuantity')]
-  boutonsModifierElem.forEach((element, index) => {
-      element.addEventListener('change', function () {
-        // Recuperer la valeur de l'input
-        const valueInput = element.value
-        // la passer en param en second arguments de la function modifier
-        modifier(index, valueInput)
-      })
-  });
+
+  for (let i = 0; i < boutonsModifierElem.length; i++) {
+    boutonsModifierElem[i].addEventListener('change', function () {
+      // Recuperer la valeur de l'input
+      if (boutonsModifierElem[i]) {
+        modifier(i, boutonsModifierElem[i].value)
+      }
+    })
+  }
+}
+
 
   ///////////////////  REGEX  \\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-  let firstName = document.getElementById("firstName");
-  let firstNameErrorElem = document.getElementById("firstNameErrorMsg");
-  let errorFirstName = true;
+let firstName = document.getElementById("firstName");
+let firstNameErrorElem = document.getElementById("firstNameErrorMsg");
+let errorFirstName = true;
 
-  var lastName = document.getElementById("lastName");
-  let lastNameErrorElem = document.getElementById("lastNameErrorMsg");
-  let errorLastName = true;
+var lastName = document.getElementById("lastName");
+let lastNameErrorElem = document.getElementById("lastNameErrorMsg");
+let errorLastName = true;
 
-  var address = document.getElementById("address");
-  let addressErrorElem = document.getElementById("addressErrorMsg");
-  let errorAddress = true;
+var address = document.getElementById("address");
+let addressErrorElem = document.getElementById("addressErrorMsg");
+let errorAddress = true;
 
-  var city = document.getElementById("city");
-  let cityErrorElem = document.getElementById("cityErrorMsg");
-  let errorCity = true;
+var city = document.getElementById("city");
+let cityErrorElem = document.getElementById("cityErrorMsg");
+let errorCity = true;
 
-  var email = document.getElementById("email");
-  let emailErrorElem = document.getElementById("emailErrorMsg");
-  let errorEmail = true;
+var email = document.getElementById("email");
+let emailErrorElem = document.getElementById("emailErrorMsg");
+let errorEmail = true;
 
 
-  function firstNameControl() {
+function firstNameControl() {
 
-    let firstNameControl = firstName.value
-    var regexNom = new RegExp (/^[a-zà-ï- ]+$/gi);
-    if(regexNom.test(firstNameControl)) {
-      firstNameErrorElem.innerHTML = ""
-      errorFirstName = false;
-    } else {
-     firstNameErrorElem.innerHTML = "Le prénom ne doit être constitué que de lettres"
-    }
-    return errorFirstName
+  let firstNameControl = firstName.value
+  var regexNom = new RegExp (/^[a-zà-ï- ]+$/gi);
+  if(regexNom.test(firstNameControl)) {
+    firstNameErrorElem.innerHTML = ""
+    errorFirstName = false;
+  } else {
+    firstNameErrorElem.innerHTML = "Le prénom ne doit être constitué que de lettres"
+  }
+  return errorFirstName
+}
+
+function lastNameControl(){
+
+  let lastNameControl = lastName.value;
+  var regexNom = RegExp (/^[a-zà-ï- ]+$/gi);
+  if(regexNom.test(lastNameControl)) {
+    lastNameErrorElem.innerHTML = ""
+    errorLastName = false;
+  } else {
+    lastNameErrorElem.innerHTML = "Le nom ne doit être constitué que de lettres"
+  }
+  return errorLastName;
+}
+
+function adressControl(){
+    
+  let adressControl = address.value
+  var regexAddress = new RegExp (/^[0-9a-zà-ï- ]+$/gi);
+  if(regexAddress.test(adressControl)) {
+    addressErrorElem.innerHTML = ""
+    errorAddress = false;
+  } else {
+    addressErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
+  }
+  return errorAddress
+}
+
+function cityControl(){
+
+  let cityControl = city.value
+  var regexAddress = new RegExp (/^[0-9a-zà-ï- ]+$/gi);
+  if(regexAddress.test(cityControl)) {
+    addressErrorElem.innerHTML = ""
+    errorCity = false;
+  } else {
+    cityErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
+  }
+  return errorCity
+}
+
+function emailControl(){
+
+  let emailControl = email.value
+  var regexEmail = new RegExp (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+  if(regexEmail.test(emailControl)) {
+    emailErrorElem.innerHTML = ""
+    errorEmail = false;
+  } else {
+    emailErrorElem.innerHTML = "L'email doit être composer de @ et .com/fr"
+  }
+  return errorEmail
+}
+
+function sendOrder() {
+
+  let contact = {
+    firstName : firstName.value,
+    lastName : lastName.value,
+    address : address.value,
+    city : city.value,
+    email : email.value,
   }
 
-  function lastNameControl(){
+  let products = []
+  allItems.forEach(el => {
+    products.push(el.info._id)
+  })
+        
+  // faire un fetch a l'api en POST
+  let clientOrder = { contact, products}
 
-    let lastNameControl = lastName.value;
-    var regexNom = RegExp (/^[a-zà-ï- ]+$/gi);
-    if(regexNom.test(lastNameControl)) {
-      lastNameErrorElem.innerHTML = ""
-      errorLastName = false;
-    } else {
-      lastNameErrorElem.innerHTML = "Le nom ne doit être constitué que de lettres"
+  fetch("http://localhost:3000/api/products/order", {
+    method: 'POST',
+    headers: { 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(clientOrder)
+  })
+
+  .then(function(res) {
+    if (res.ok) {
+      return res.json();
     }
-    return errorLastName;
-  }
+  })
 
-  function adressControl(){
-     
-    let adressControl = address.value
-    var regexAddress = new RegExp (/^[0-9a-zà-ï- ]+$/gi);
-    if(regexAddress.test(adressControl)) {
-      addressErrorElem.innerHTML = ""
-      errorAddress = false;
-    } else {
-      addressErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
-    }
-    return errorAddress
-  }
+  .then(function(dataFromAPI) {
+    let order = dataFromAPI.orderId;
+    localStorage.clear();
+    document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
+  })
+}
 
-  function cityControl(){
+firstName.addEventListener("keyup", function (event) {
+  firstNameControl()
+});
 
-    let cityControl = city.value
-    var regexAddress = new RegExp (/^[0-9a-zà-ï- ]+$/gi);
-    if(regexAddress.test(cityControl)) {
-      addressErrorElem.innerHTML = ""
-      errorCity = false;
-    } else {
-      cityErrorElem.innerHTML = "L'adresse doit comporter un numéro de rue ainsi que le nom de la rue"
-    }
-    return errorCity
-  }
+lastName.addEventListener("keyup", function (event) {
+  lastNameControl();
+});
 
-  function emailControl(){
+address.addEventListener("keyup", function (event) {
+  adressControl()
+});
 
-    let emailControl = email.value
-    var regexEmail = new RegExp (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
-    if(regexEmail.test(emailControl)) {
-      emailErrorElem.innerHTML = ""
-      errorEmail = false;
-    } else {
-      emailErrorElem.innerHTML = "L'email doit être composer de @ et .com/fr"
-    }
-    return errorEmail
-  }
+city.addEventListener("keyup", function (event) {
+  cityControl()
+});
 
-  function sendOrder() {
-
-    let contact = {
-      firstName : firstName.value,
-      lastName : lastName.value,
-      address : address.value,
-      city : city.value,
-      email : email.value,
-    }
-
-    let products = []
-    allItems.forEach(el => {
-      products.push(el.info._id)
-    })
-          
-    // faire un fetch a l'api en POST
-    let clientOrder = { contact, products}
-
-    fetch("http://localhost:3000/api/products/order", {
-      method: 'POST',
-      headers: { 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(clientOrder)
-    })
-
-    .then(function(res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-
-    .then(function(dataFromAPI) {
-      let order = dataFromAPI.orderId;
-      localStorage.clear();
-      document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?orderid="+order; 
-    })
-  }
-
-  firstName.addEventListener("keyup", function (event) {
-    firstNameControl()
-  });
-
-  lastName.addEventListener("keyup", function (event) {
-    lastNameControl();
-  });
-
-  address.addEventListener("keyup", function (event) {
-    adressControl()
-  });
-
-  city.addEventListener("keyup", function (event) {
-    cityControl()
-  });
-
-  email.addEventListener("keyup", function (event) {
-    emailControl()
-  });
+email.addEventListener("keyup", function (event) {
+  emailControl()
+});
 
 ////////////////////// REGEX CONTROL \\\\\\\\\\\\\\\\\\\\
 
   
-  let boutonCommanderElem = document.getElementById("order");
-   boutonCommanderElem.addEventListener("click",(event) => {
-    event.preventDefault();
+let boutonCommanderElem = document.getElementById("order");
+  boutonCommanderElem.addEventListener("click",(event) => {
+  event.preventDefault();
 
-    firstNameControl();
-    lastNameControl();
-    adressControl();
-    cityControl();
-    emailControl();
+  firstNameControl();
+  lastNameControl();
+  adressControl();
+  cityControl();
+  emailControl();
 
-    if(!errorFirstName && !errorLastName && !errorAddress && !errorCity && !errorEmail && allItems.length > 0){
-      sendOrder()
-    };
-  })
+  if(!errorFirstName && !errorLastName && !errorAddress && !errorCity && !errorEmail && allItems.length > 0){
+    sendOrder()
+  };
+})
