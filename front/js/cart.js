@@ -34,7 +34,7 @@ function affichePanier(elementsPanier) {
     const cartContainer = document.getElementById("cart__items")
     cartContainer.innerHTML += 
       `
-      <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+      <article class="cart__item" data-id=${element.info.id} data-color=${element.selectedVariant}>
         <div class="cart__item__img">
           <img src=${element.info.imageUrl} alt="Photographie d'un canapé">
         </div>

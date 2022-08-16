@@ -18,8 +18,7 @@ fetch("http://localhost:3000/api/products/")
       let productLink = document.createElement("a")
       productLink.href = "./product.html?id=" + produit._id
 
-      // je créé une balise article que je stock dans la
-      // variable article
+      // je créé une balise article que je stock dans la variable article
       let article = document.createElement("article");
 
       // je créé un élément h3 que je stock dans
