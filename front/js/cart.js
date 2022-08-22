@@ -6,11 +6,11 @@ function principal() {
   // Récuperer les elements du panier depuis le localstorage
   allItems = JSON.parse(localStorage.getItem('panier')) || []
 
-  verifPrixPanier(true)
+  verifPrixPanier()
 }
 
 // fonction pour récupérer les produits en fonction des id du panier
-function verifPrixPanier(displayCart) {
+function verifPrixPanier() {
   fetch("http://localhost:3000/api/products/")
     .then(response => response.json())
     .then(products => {
@@ -21,9 +21,7 @@ function verifPrixPanier(displayCart) {
               }
           }
       }
-      if (displayCart){
-        affichePanier(allItems)
-      }
+      affichePanier(allItems)
     })
     // .catch(error => console.log(error));
 }
@@ -67,21 +65,28 @@ function affichePanier(elementsPanier) {
   totalPanier(elementsPanier)
 }
 
-function totalPanier (panier) {
+function totalPanier(panier) {
+
   let totalPrix = 0;
   let totalQuantite = 0
-  panier.forEach(produit => {
-    console.log("produit", produit.info)
-    totalQuantite += parseInt(produit.quantity)
-    totalPrix += parseInt(produit.quantity * produit.info.price)
-    
-  });
 
-  
-  let quantityElem = document.querySelector('#totalQuantity');
-  let priceElem = document.querySelector('#totalPrice');
-  quantityElem.innerHTML = totalQuantite;
-  priceElem.innerHTML = totalPrix;
+  fetch("http://localhost:3000/api/products/")
+  .then(response => response.json())
+  .then(products => {
+      for (let product of products) {
+        for (let i = 0; i < panier.length; i++) {
+          if (panier[i].info._id === product._id) {
+
+            totalQuantite += parseInt(panier[i].quantity)
+            totalPrix += parseInt(panier[i].quantity * product.price)
+          }
+        }
+    }
+    let quantityElem = document.querySelector('#totalQuantity');
+    let priceElem = document.querySelector('#totalPrice');
+    quantityElem.innerHTML = totalQuantite;
+    priceElem.innerHTML = totalPrix;
+  })
 }
 
 function supprimer(monIndexTableau){
@@ -95,8 +100,9 @@ function supprimer(monIndexTableau){
   itemsInCart.forEach(singleItem => {
     delete singleItem.info.price
   })
+  console.log('itemsInCart', itemsInCart)
+
   localStorage.setItem('panier', JSON.stringify(itemsInCart))
-  verifPrixPanier()
   totalPanier(allItems)
   // mettre a jour le localstorage avec allitems
 
@@ -107,12 +113,13 @@ function modifier(indexTab2, newQuantity) {
   // mettre a jour le tableau allITems
   allItems[indexTab2].quantity = newQuantity
   // mettre a jour le localstorage avec allitems
-  let itemsInCart = allItems
+
+  itemsInCart = allItems
   itemsInCart.forEach(singleItem => {
     delete singleItem.info.price
   })
+
   localStorage.setItem('panier', JSON.stringify(itemsInCart))
-  verifPrixPanier()
   totalPanier(allItems)
   indexTab2 = parseInt(newQuantity)
 }
