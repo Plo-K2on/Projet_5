@@ -6,11 +6,11 @@ function principal() {
   // Récuperer les elements du panier depuis le localstorage
   allItems = JSON.parse(localStorage.getItem('panier')) || []
 
-  verifPrixPanier()
+  verifPrixPanier(true)
 }
 
 // fonction pour récupérer les produits en fonction des id du panier
-function verifPrixPanier() {
+function verifPrixPanier(displayCart) {
   fetch("http://localhost:3000/api/products/")
     .then(response => response.json())
     .then(products => {
@@ -21,7 +21,9 @@ function verifPrixPanier() {
               }
           }
       }
-      affichePanier(allItems)
+      if (displayCart){
+        affichePanier(allItems)
+      }
     })
     // .catch(error => console.log(error));
 }
@@ -69,6 +71,7 @@ function totalPanier (panier) {
   let totalPrix = 0;
   let totalQuantite = 0
   panier.forEach(produit => {
+    console.log("produit", produit.info)
     totalQuantite += parseInt(produit.quantity)
     totalPrix += parseInt(produit.quantity * produit.info.price)
     
@@ -88,7 +91,12 @@ function supprimer(monIndexTableau){
   itemASupprimer.remove()
   // mettre a jour le tableau allITems
   allItems.splice(monIndexTableau, 1)
-  localStorage.setItem('panier', JSON.stringify(allItems))
+  let itemsInCart = allItems
+  itemsInCart.forEach(singleItem => {
+    delete singleItem.info.price
+  })
+  localStorage.setItem('panier', JSON.stringify(itemsInCart))
+  verifPrixPanier()
   totalPanier(allItems)
   // mettre a jour le localstorage avec allitems
 
@@ -99,7 +107,12 @@ function modifier(indexTab2, newQuantity) {
   // mettre a jour le tableau allITems
   allItems[indexTab2].quantity = newQuantity
   // mettre a jour le localstorage avec allitems
-  localStorage.setItem('panier', JSON.stringify(allItems))
+  let itemsInCart = allItems
+  itemsInCart.forEach(singleItem => {
+    delete singleItem.info.price
+  })
+  localStorage.setItem('panier', JSON.stringify(itemsInCart))
+  verifPrixPanier()
   totalPanier(allItems)
   indexTab2 = parseInt(newQuantity)
 }
