@@ -23,7 +23,6 @@ function verifPrixPanier() {
       }
       affichePanier(allItems)
     })
-    // .catch(error => console.log(error));
 }
 
 
@@ -100,7 +99,6 @@ function supprimer(monIndexTableau){
   itemsInCart.forEach(singleItem => {
     delete singleItem.info.price
   })
-  console.log('itemsInCart', itemsInCart)
 
   localStorage.setItem('panier', JSON.stringify(itemsInCart))
   totalPanier(allItems)

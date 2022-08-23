@@ -81,7 +81,6 @@ fetch("http://localhost:3000/api/products/" + idProduct)
           
     itemCart.info = product
     delete itemCart.info.price
-    console.log("itemCart.info", itemCart.info)
     itemCart.selectedVariant = variant
     itemCart.quantity = parseInt(quantity)
 
